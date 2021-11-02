@@ -1,0 +1,97 @@
+{# <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">BookStore</a>
+    <button class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarColor01"
+      aria-controls="navbarColor01"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="/">
+            Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/BookList">Book List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/AddBook">Add Book</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <ul class="navbar-nav">
+          {% if not app.user %}
+            <li class="nav-item">
+              <a class="nav-link" href="/Login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/Register">Register</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('logout') }}">Logout</a>
+            </li>
+          {% endif %}
+        </ul>
+      </form>
+    </div>
+  </div>
+</nav> #}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container px-5">
+    <a class="navbar-brand" href="/">Book Store</a>
+    <button class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
+        <li class="nav-item">
+          <a class="nav-link" href="/BookList">Book List</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle"
+            id="navbarDropdownPortfolio"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{ app.user ? app.user.username : 'Account' }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownPortfolio">
+            {% if not app.user %}
+              <li><a class="dropdown-item" href="/Login">Login</a></li>
+              <li><a class="dropdown-item" href="/Register">Sign Up</a></li>
+            {% else %}
+              <li>
+                <a class="dropdown-item" href="{{ path('logout') }}">Logout</a>
+              </li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

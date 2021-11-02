@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <!-- Comments section -->
+  <section class="p-5 pt-5">
+    <div class="container px-5">
+      <div class="card bg-light">
+        <div class="card-body mb-4">
+          <!-- Comment form -->
+          {{ form_start(formComment) }}
+          <div class="mb-2">
+            {{ form_label(formComment.content, 'Update Comment') }}
+          </div>
+          {{ form_widget(formComment.content) }}
+          <div style="float: right" class="mt-2">
+            {{ form_widget(formComment.submit) }}
+            <a href="{{
+              path(
+                'details',
+                {
+                  id: comment.book.id
+                }
+              )
+              }}">
+              <button type="submit" class="btn btn-primary ml-5">Back</button>
+            </a>
+          </div>
+          {{ form_end(formComment) }}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

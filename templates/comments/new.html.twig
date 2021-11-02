@@ -1,0 +1,27 @@
+{% block body %}
+  <!-- Comment form -->
+  {{ form_start(formComment) }}
+  {{
+    form_widget(
+      formComment.content,
+      {
+        attr: {
+          disabled: app.user ? false : true
+        }
+      }
+    )
+  }}
+  <div style="float: right" class="mt-2">
+    {{
+      form_widget(
+        formComment.submit,
+        {
+          attr: {
+            disabled: app.user ? false : true
+          }
+        }
+      )
+    }}
+  </div>
+  {{ form_end(formComment) }}
+{% endblock %}

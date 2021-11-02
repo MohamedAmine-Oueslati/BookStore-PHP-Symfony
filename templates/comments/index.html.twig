@@ -1,0 +1,81 @@
+{% block body %}
+  <!-- Comments section -->
+  <section class="p-5 pt-0">
+    <div class="container px-5">
+      <div class="card bg-light">
+        <div class="card-body mb-4">
+          {{ include('comments/new.html.twig') }}
+          <!-- Comment with nested comments -->
+          <h5 class="m-3">
+            {{ book.comments|length }} Comments
+          </h5>
+          <!-- Single comment -->
+          {% for idx, comment in book.comments|reverse %}
+            <div class="d-flex mb-4">
+              <div class="flex-shrink-0">
+                <img class="rounded-circle"
+                  src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                  alt="..." />
+              </div>
+              <div class="ms-3">
+                <div class="fw-bold">
+                  {{ comment.author.username }}
+                  <small class="text-muted">
+                    ({{ comment.createdAt|date('d/m/Y H:i') }})
+                  </small>
+                  <!-- Update or Delete Comment -->
+                  {% if app.user and app.user.email == comment.author.email %}
+                    <div style="float:right">
+                      <span style="margin:10px">
+                        <a class="text-decoration-none link-dark"
+                          href="{{
+                          path(
+                            'comments_delete',
+                            {
+                              id: comment.id
+                            }
+                          )
+                          }}">
+                          <i class="bi bi-trash-fill"></i>
+                        </a>
+                      </span>
+                      <span>
+                        <a class="text-decoration-none link-dark"
+                          href="{{
+                          path(
+                            'comments_edit',
+                            {
+                              id: comment.id
+                            }
+                          )
+                          }}">
+                          <i class="bi bi-pencil-fill"></i>
+                        </a>
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+                {{ comment.content }}
+                {# <!-- Child comment 1 -->
+                  <div class="d-flex mt-4">
+                    <div class="flex-shrink-0">
+                      <img class="rounded-circle"
+                        src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                        alt="..." />
+                    </div>
+                    <div class="ms-3">
+                      <div class="fw-bold">
+                        Commenter Name
+                      </div>And under those conditions, you cannot establish a
+                      capital-market evaluation of that enterprise. You can't
+                      get investors.
+                    </div>
+                  </div> #}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

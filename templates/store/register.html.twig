@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <section class="py-5">
+    <div class="container px-5">
+      <!-- Login form -->
+      <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+          <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+            <i class="bi bi-person-square"></i>
+          </div>
+          <h1 class="fw-bolder">
+            Create Account
+          </h1>
+          <p class="lead fw-normal text-muted mb-0">
+            Sign up with your Email Address to get started
+          </p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-6">
+            {{ form_start(formUser) }}
+            <!-- Email address input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formUser.email) }}
+              <label for="email">Email address</label>
+              <div class="form-error">
+                {{ form_errors(formUser.email) }}
+              </div>
+            </div>
+            <!-- Username input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formUser.username) }}
+              <label for="phone">Username</label>
+              <div class="form-error">
+                {{ form_errors(formUser.username) }}
+              </div>
+            </div>
+            <!-- Password input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formUser.password) }}
+              <label for="phone">Password</label>
+              <div class="form-error">
+                {{ form_errors(formUser.password) }}
+              </div>
+            </div>
+            <!-- Confirm Password input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formUser.confirm_password) }}
+              <label for="phone">Confirm Password</label>
+              <div class="form-error">
+                {{ form_errors(formUser.confirm_password) }}
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="d-grid">
+              {{ form_widget(formUser.register) }}
+            </div>
+            {{ form_end(formUser) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
