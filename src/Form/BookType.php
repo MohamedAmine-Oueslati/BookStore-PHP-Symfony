@@ -21,9 +21,9 @@ class BookType extends AbstractType
             ->add('author', TextType::class, ["attr" => ["placeholder" => "Author"]])
             ->add('image', UrlType::class, ["attr" => ["placeholder" => "Image URL"]])
             ->add('genre', TextType::class, ["attr" => ["placeholder" => "Genre"]])
-            ->add('description', TextareaType::class, ["attr" => ["placeholder" => "Description"]])
             ->add('numberOfPages', NumberType::class, ["attr" => ["placeholder" => "Number Of Pages"]])
             ->add('price', NumberType::class, ["attr" => ["placeholder" => "Price"]])
+            ->add('description', TextareaType::class, ["attr" => ["placeholder" => "Description", 'rows' => '3']])
             ->add('submit', SubmitType::class, ['label' => 'Add Book']);
     }
 

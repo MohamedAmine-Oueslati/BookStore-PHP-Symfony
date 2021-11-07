@@ -2,9 +2,88 @@
 
 {% extends 'base.html.twig' %}
 {% block body %}
-  <h1>
-    Add Book
-  </h1>
-
-  {{ form(formBook) }}
+  <section class="py-5">
+    <div class="container px-5">
+      <!-- Login form -->
+      <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+          <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+            <i class="bi bi-book"></i>
+          </div>
+          <h1 class="fw-bolder">
+            Add Book
+          </h1>
+          <p class="lead fw-normal text-muted mb-0">
+            BookStore is your one-stop-shop to sell your Books
+          </p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-6">
+            {{ form_start(formBook) }}
+            <!-- Title input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.title) }}
+              <label for="email">Title</label>
+              <div class="form-error">
+                {{ form_errors(formBook.title) }}
+              </div>
+            </div>
+            <!-- Author input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.author) }}
+              <label for="phone">Author</label>
+              <div class="form-error">
+                {{ form_errors(formBook.author) }}
+              </div>
+            </div>
+            <!-- Image input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.image) }}
+              <label for="phone">Image URL</label>
+              <div class="form-error">
+                {{ form_errors(formBook.image) }}
+              </div>
+            </div>
+            <!-- Genre input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.genre) }}
+              <label for="phone">Genre</label>
+              <div class="form-error">
+                {{ form_errors(formBook.genre) }}
+              </div>
+            </div>
+            <!-- Number Of Pages input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.numberOfPages) }}
+              <label for="phone">Number Of Pages</label>
+              <div class="form-error">
+                {{ form_errors(formBook.numberOfPages) }}
+              </div>
+            </div>
+            <!-- Price input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.price) }}
+              <label for="phone">Price</label>
+              <div class="form-error">
+                {{ form_errors(formBook.price) }}
+              </div>
+            </div>
+            <!-- Description input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.description) }}
+              <label for="phone">Description</label>
+              <div class="form-error">
+                {{ form_errors(formBook.description) }}
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="d-grid">
+              {{ form_widget(formBook.submit) }}
+            </div>
+            {{ form_end(formBook) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

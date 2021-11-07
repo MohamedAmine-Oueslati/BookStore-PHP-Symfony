@@ -6,11 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 use App\Form\CommentType;
 use App\Entity\Comments;
-use App\Entity\Books;
-use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/comments")
