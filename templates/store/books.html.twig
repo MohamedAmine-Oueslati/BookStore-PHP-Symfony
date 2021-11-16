@@ -62,13 +62,17 @@
             </div>
           </div>
         {% endfor %}
+        <div class="d-flex justify-content-center">
+          {% do books.setPageRange(2) %}
+          {{ knp_pagination_render(books, '/pagination.html.twig') }}
+        </div>
       </div>
-      <div class="text-end mb-5 mb-xl-0">
+      {# <div class="text-end mb-5 mb-xl-0">
         <a class="text-decoration-none" href="#!">
           More stories
           <i class="bi bi-arrow-right"></i>
         </a>
-      </div>
+      </div> #}
     </div>
   </section>
 {% endblock %}

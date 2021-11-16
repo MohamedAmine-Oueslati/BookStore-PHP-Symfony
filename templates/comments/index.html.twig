@@ -10,7 +10,7 @@
             {{ book.comments|length }} Comments
           </h5>
           <!-- Single comment -->
-          {% for idx, comment in book.comments|reverse %}
+          {% for idx, comment in comments|reverse %}
             <div class="d-flex mb-4">
               <div class="flex-shrink-0">
                 <img class="rounded-circle"
@@ -74,6 +74,10 @@
               </div>
             </div>
           {% endfor %}
+          <div class="d-flex justify-content-center">
+            {% do comments.setPageRange(2) %}
+            {{ knp_pagination_render(comments, '/pagination.html.twig') }}
+          </div>
         </div>
       </div>
     </div>

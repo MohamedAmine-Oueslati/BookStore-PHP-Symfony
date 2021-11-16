@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+
 use App\Form\BookType;
 use App\Entity\Books;
 use App\Repository\BooksRepository;
@@ -18,7 +20,7 @@ class StoreController extends AbstractController
     /**
      * @Route("/Book/{id}", name="details")
      */
-    public function details(Books $book, Request $request): Response
+    public function details(Books $book, PaginatorInterface $paginator, Request $request): Response
     {
         $comment = new Comments();
         $form = $this->createForm(CommentType::class, $comment);
@@ -32,8 +34,15 @@ class StoreController extends AbstractController
             return $this->redirectToRoute('details', ['id' => $book->getId()]);
         }
 
+        $commentPerPage = $paginator->paginate(
+            $book->getComments(),
+            $request->query->getInt('page', 1),
+            5
+        );
+
         return $this->render('store/details.html.twig', [
             'book' => $book,
+            'comments' => $commentPerPage,
             'formComment' => $form->createView(),
         ]);
     }
@@ -41,15 +50,19 @@ class StoreController extends AbstractController
     /**
      * @Route("/BookList", name="bookList")
      */
-    public function bookList(BooksRepository $repo): Response
+    public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
         // $repo = $this->getDoctrine()->getRepository(Books::class);
         $books = $repo->findAll();
-
+        $bookPerPage = $paginator->paginate(
+            $books,
+            $request->query->getInt('page', 1),
+            8
+        );
 
         return $this->render('store/books.html.twig', [
             'controller_name' => 'StoreController',
-            'books' => $books
+            'books' => $bookPerPage
         ]);
     }
 
