@@ -13,8 +13,10 @@ use App\Entity\Books;
 use App\Repository\BooksRepository;
 use App\Form\CommentType;
 use App\Entity\Comments;
+use App\Form\SearchType;
+use App\Entity\Search;
 
-class StoreController extends AbstractController
+class BookController extends AbstractController
 {
 
     /**
@@ -40,7 +42,7 @@ class StoreController extends AbstractController
             5
         );
 
-        return $this->render('store/details.html.twig', [
+        return $this->render('book/details.html.twig', [
             'book' => $book,
             'comments' => $commentPerPage,
             'formComment' => $form->createView(),
@@ -52,17 +54,22 @@ class StoreController extends AbstractController
      */
     public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
-        // $repo = $this->getDoctrine()->getRepository(Books::class);
-        $books = $repo->findAll();
+
+        $search = new Search();
+        $form = $this->createForm(SearchType::class, $search);
+        $form->handleRequest($request);
+
+        $books = $repo->findAllQuery($search);
         $bookPerPage = $paginator->paginate(
             $books,
             $request->query->getInt('page', 1),
             8
         );
 
-        return $this->render('store/books.html.twig', [
-            'controller_name' => 'StoreController',
-            'books' => $bookPerPage
+        return $this->render('book/books.html.twig', [
+            'controller_name' => 'BookController',
+            'books' => $bookPerPage,
+            'formSearch' => $form->createView(),
         ]);
     }
 
@@ -88,7 +95,7 @@ class StoreController extends AbstractController
             return $this->redirectToRoute('bookList');
         }
 
-        return $this->render('store/orders.html.twig', [
+        return $this->render('book/orders.html.twig', [
             'formBook' => $form->createView(),
         ]);
     }
@@ -98,8 +105,8 @@ class StoreController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('store/home.html.twig', [
-            'controller_name' => 'StoreController',
+        return $this->render('book/home.html.twig', [
+            'controller_name' => 'BookController',
         ]);
     }
 
@@ -108,8 +115,8 @@ class StoreController extends AbstractController
      */
     public function about(): Response
     {
-        return $this->render('store/about.html.twig', [
-            'controller_name' => 'StoreController',
+        return $this->render('book/about.html.twig', [
+            'controller_name' => 'BookController',
         ]);
     }
 
@@ -118,8 +125,8 @@ class StoreController extends AbstractController
      */
     public function contact(): Response
     {
-        return $this->render('store/contact.html.twig', [
-            'controller_name' => 'StoreController',
+        return $this->render('book/contact.html.twig', [
+            'controller_name' => 'BookController',
         ]);
     }
 
@@ -128,8 +135,8 @@ class StoreController extends AbstractController
      */
     public function faq(): Response
     {
-        return $this->render('store/faq.html.twig', [
-            'controller_name' => 'StoreController',
+        return $this->render('book/faq.html.twig', [
+            'controller_name' => 'BookController',
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Books;
+use App\Entity\Search;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,25 +17,32 @@ class BooksRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Books::class);
+        parent::__construct($registry, Books::class, Search::class);
     }
 
     // /**
     //  * @return Books[] Returns an array of Books objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findAllQuery(Search $search)
     {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $query = $this->createQueryBuilder('b');
+        if ($search->getMinPrice()) {
+            $query = $query->andWhere('b.price > :minprice')
+                ->setParameter('minprice', $search->getMinPrice());
+        }
+        if ($search->getMaxPrice()) {
+            $query = $query->andWhere('b.price < :maxprice')
+                ->setParameter('maxprice', $search->getMaxPrice());
+        }
+        if ($search->getTitle()) {
+            $query = $query->andWhere('b.title LIKE :title')
+                ->setParameter('title', $search->getTitle());
+        }
+        return $query->getQuery()
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Books

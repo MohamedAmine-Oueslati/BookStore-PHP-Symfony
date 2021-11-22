@@ -45,6 +45,6 @@ class CartController extends AbstractController
 
 
 
-        return $this->forward('App\Controller\StoreController::bookList');
+        return $this->forward('App\Controller\BookController::bookList');
     }
 }

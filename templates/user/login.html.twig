@@ -2,6 +2,11 @@
 {% block body %}
   <section class="py-5">
     <div class="container px-5">
+    {% if error %}
+      <div class="alert alert-danger">
+      {{error.messageKey}}
+      </div>
+    {% endif %}
       <!-- Login form -->
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-5">
@@ -27,7 +32,8 @@
                   id="email"
                   type="email"
                   name="_username"
-                  data-sb-validations="required,email" />
+                  data-sb-validations="required,email"
+                  value={{lastUsername}} />
                 <label for="email">Email address</label>
               </div>
               <!-- Password input -->
@@ -39,6 +45,7 @@
                   data-sb-validations="required" />
                 <label for="phone">Password</label>
               </div>
+              <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
               <!-- Submit Button -->
               <div class="d-grid">
                 <button class="btn btn-primary btn-lg"

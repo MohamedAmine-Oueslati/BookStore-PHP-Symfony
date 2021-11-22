@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\LoginType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 use App\Form\RegisterType;
 use App\Entity\Users;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -35,7 +36,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('bookList');
         }
 
-        return $this->render('store/register.html.twig', [
+        return $this->render('user/register.html.twig', [
             'formUser' => $form->createView(),
         ]);
     }
@@ -43,22 +44,13 @@ class UserController extends AbstractController
     /**
      * @Route("/Login", name="login")
      */
-    public function login(): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // $user = new Users();
-        // $form = $this->createForm(LoginType::class, $user);
-
-        // $form->handleRequest($request);
-
-        // $loginUser = $this->getDoctrine()
-        //     ->getRepository(Users::class)
-        //     ->findOneBy(['email' => $user->getEmail()]);
-
-        // if ($loginUser && $loginUser->getPassword() === $user->getPassword()) {
-        //     return $this->redirectToRoute('bookList');
-        // 
-        return $this->render('store/login.html.twig', [
-            // 'formUser' => $form->createView(),
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('user/login.html.twig', [
+            'lastUsername' => $lastUsername,
+            'error' => $error
         ]);
     }
 

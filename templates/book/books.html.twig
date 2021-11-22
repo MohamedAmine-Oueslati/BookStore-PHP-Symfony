@@ -1,13 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+  <!-- Filter section -->
+  <section class="py-3">
+    {{ form_start(formSearch) }}
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="mx-2">
+        {{ form_widget(formSearch.minPrice) }}
+      </div>
+      <div class="mx-2">
+        {{ form_widget(formSearch.maxPrice) }}
+      </div>
+      <div class="mx-2">
+        {{ form_widget(formSearch.title) }}
+      </div>
+      <div class="mx-2">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+    {{ form_end(formSearch) }}
+  </section>
   <!-- Blog preview section -->
-  <section class="py-5">
+  <section class="py-3">
     <div class="container px-5">
       <h2 class="fw-bolder fs-5 mb-4">
         Book List
       </h2>
       <div class="row gx-5">
         {% for idx, book in books|reverse %}
+          {# <div class="col-md-4 card_container">
+            <div class="profile-card-2">
+              <img src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-2.jpg"
+                class="img img-responsive" />
+              <div class="profile-name">
+                {{ book.title != (book.title|slice(0, 20))
+                  ? (book.title|slice(0, 20)) ~ '...'
+                  : book.title }}
+              </div>
+              <div class="profile-username">
+                @johndoesurname
+              </div>
+              <div class="profile-icons">
+                <a href="#"><i class="fa fa-facebook"></i></a><a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a><a href="#"><i class="fa fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div> #}
           <div class="col-lg-3 mb-5">
             <div class="card h-100 shadow border-0">
               <a href="/Book/{{ book.id }}"
