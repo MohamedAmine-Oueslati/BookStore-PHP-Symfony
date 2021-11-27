@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      {{ email.subject }}
+    </title>
+  </head>
+  <body>
+    <div class="body">
+      <div class="container">
+        <div class="header text-center">
+          <a href="{{ url('home') }}">
+            <img src="{{ absolute_url(asset('img/logo.jpg')) }}"
+              class="logo"
+              alt="BookStore Logo" />
+          </a>
+        </div>
+        <div class="content">
+          <h1 class="text-center">
+            Nice to meet you {{ email.toName }}!
+          </h1>
+          <p class="block">
+            Welcome to <strong>BookStore</strong>, this is your online place to
+            buy , sell and discuss books we can't wait to read what you have to
+            write in the blog section. Get started on your first article and
+            connect with the BookStore community.
+            <a href="{{ url('home') }}">--></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

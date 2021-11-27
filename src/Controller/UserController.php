@@ -11,13 +11,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Form\RegisterType;
 use App\Entity\Users;
+use App\Mailer\RegisterMail;
 
 class UserController extends AbstractController
 {
     /**
      * @Route("/Register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, RegisterMail $mailer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -32,6 +33,8 @@ class UserController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $mailer->sendMail($user);
 
             return $this->redirectToRoute('bookList');
         }
