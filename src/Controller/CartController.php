@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -15,11 +16,14 @@ class CartController extends AbstractController
     /**
      * @Route("/cart", name="cart")
      */
-    public function index(): Response
+    public function index(Security $security): Response
     {
 
+        $user = $security->getUser();
+        $cart = $user->getCart();
+
         return $this->render('cart/index.html.twig', [
-            'controller_name' => 'CartController',
+            'cart' => $cart,
         ]);
     }
 
@@ -29,22 +33,36 @@ class CartController extends AbstractController
     public function cartList(Security $security, Books $book): Response
     {
         $user = $security->getUser();
-        if (!$user->getCart()) {
+        $cart = $user->getCart();
+        if (!$cart) {
             $cart = new Cart();
-            $cart->setUser($user)
-                ->addBook($book);
-        } else {
-            $cart = $user->getCart();
-            $cart->addBook($book);
+            $cart->setUser($user);
         }
+
+        $cart->addBook($book);
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($cart);
         $entityManager->flush();
 
-        // dump($id);
+        // return $this->forward('App\Controller\BookController::bookList');
+        return $this->redirectToRoute('bookList');
+    }
 
+    /**
+     * @Route("cart/delete/{id}", name="cart_delete")
+     */
+    public function delete(Security $security, Books $book): Response
+    {
 
+        // if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
+        $cart = $security->getUser()->getCart();
+        $cart->removeBook($book);
 
-        return $this->forward('App\Controller\BookController::bookList');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->flush();
+        // }
+
+        return $this->redirectToRoute('cart');
     }
 }

@@ -4,7 +4,7 @@
 {% block body %}
   <section class="py-5">
     <div class="container px-5">
-      <!-- Login form -->
+      <!-- Book form -->
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-5">
           <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
@@ -23,7 +23,7 @@
             <!-- Title input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.title) }}
-              <label for="email">Title</label>
+              <label for="title">Title</label>
               <div class="form-error">
                 {{ form_errors(formBook.title) }}
               </div>
@@ -31,23 +31,23 @@
             <!-- Author input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.author) }}
-              <label for="phone">Author</label>
+              <label for="author">Author</label>
               <div class="form-error">
                 {{ form_errors(formBook.author) }}
               </div>
             </div>
             <!-- Image input -->
             <div class="form-floating mb-3">
-              {{ form_widget(formBook.image) }}
-              <label for="phone">Image URL</label>
+              {{ form_widget(formBook.imageFile) }}
+              {# <label for="phone">Image URL</label>
               <div class="form-error">
-                {{ form_errors(formBook.image) }}
-              </div>
+                {{ form_errors(formBook.imageFile) }}
+              </div> #}
             </div>
             <!-- Genre input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.genre) }}
-              <label for="phone">Genre</label>
+              <label for="genre">Genre</label>
               <div class="form-error">
                 {{ form_errors(formBook.genre) }}
               </div>
@@ -55,7 +55,7 @@
             <!-- Number Of Pages input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.numberOfPages) }}
-              <label for="phone">Number Of Pages</label>
+              <label for="pages">Number Of Pages</label>
               <div class="form-error">
                 {{ form_errors(formBook.numberOfPages) }}
               </div>
@@ -63,7 +63,7 @@
             <!-- Price input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.price) }}
-              <label for="phone">Price</label>
+              <label for="price">Price</label>
               <div class="form-error">
                 {{ form_errors(formBook.price) }}
               </div>
@@ -71,7 +71,7 @@
             <!-- Description input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.description) }}
-              <label for="phone">Description</label>
+              <label for="description">Description</label>
               <div class="form-error">
                 {{ form_errors(formBook.description) }}
               </div>

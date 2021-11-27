@@ -1,20 +1,186 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!{% endblock %}
-
+{% block title %}
+  Shopping Cart
+{% endblock %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="style/cart.css" />
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/hacking/Projects/BookStore-PHP-Symfony/src/Controller/CartController.php'|file_link(0) }}">src/Controller/CartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/hacking/Projects/BookStore-PHP-Symfony/templates/cart/index.html.twig'|file_link(0) }}">templates/cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+  <div class="container px-4 py-5 mx-auto">
+    {% if (cart.book|length) > 0 %}
+      <div class="row d-flex justify-content-center">
+        <div class="col-5">
+          <h4 class="heading">
+            Shopping Cart
+          </h4>
+        </div>
+        <div class="col-7">
+          <div class="row text-right">
+            <div class="col-4">
+              <h6 class="mt-2">
+                Quantity
+              </h6>
+            </div>
+            <div class="col-4">
+              <h6 class="mt-2">
+                Price
+              </h6>
+            </div>
+            <div class="col-4">
+              <h6 class="mt-2"></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% for book in cart.book %}
+        <div class="row d-flex justify-content-center border-top">
+          <div class="col-5">
+            <div class="d-flex">
+              <div class="book">
+                <img src="/images/books/{{ book.imageName }}"
+                  class="book-img" />
+              </div>
+              <div class="my-auto flex-column d-flex pad-left">
+                <h6 class="mob-text">
+                  {{ book.title }}
+                </h6>
+                <p class="mob-text">
+                  {{ book.author }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="my-auto col-7">
+            <div class="row text-right">
+              <div class="col-4">
+                <div class="d-flex justify-content-start input-number">
+                  <input type="number"
+                    class="form-control form-control-lg text-center"
+                    value="1" />
+                </div>
+              </div>
+              <div class="col-4">
+                <div>
+                  <h6 class="mob-text mt-2">
+                    ${{ book.price|number_format(2) }}
+                  </h6>
+                </div>
+              </div>
+              <div class="col-4">
+                <form method="POST"
+                  action="{{
+                  path(
+                    'cart_delete',
+                    {
+                      id: book.id
+                    }
+                  )
+                  }}">
+                  <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="row">
+              <div class="col-lg-3 radio-group">
+                <div class="d-flex px-3 radio">
+                  <img class="pay" src="https://i.imgur.com/WIAP9Ku.jpg" />
+                  <p class="my-auto">
+                    Credit Card
+                  </p>
+                </div>
+                <div class="d-flex px-3 radio gray">
+                  <img class="pay" src="https://i.imgur.com/OdxcctP.jpg" />
+                  <p class="my-auto">
+                    Debit Card
+                  </p>
+                </div>
+                <div class="d-flex px-3 radio gray mb-3">
+                  <img class="pay" src="https://i.imgur.com/cMk1MtK.jpg" />
+                  <p class="my-auto">
+                    PayPal
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="row px-2">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label">Name on Card</label> <input type="text"
+                      id="cname"
+                      name="cname"
+                      placeholder="Johnny Doe" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label">Card Number</label> <input type="text"
+                      id="cnum"
+                      name="cnum"
+                      placeholder="1111 2222 3333 4444" />
+                  </div>
+                </div>
+                <div class="row px-2">
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label">Expiration Date</label> <input type="text"
+                      id="exp"
+                      name="exp"
+                      placeholder="MM/YYYY" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="form-control-label">CVV</label> <input type="text"
+                      id="cvv"
+                      name="cvv"
+                      placeholder="***" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 mt-2">
+                <div class="d-flex justify-content-between px-4">
+                  <p class="mb-1 text-left">
+                    Subtotal
+                  </p>
+                  <h6 class="mb-1 text-right">
+                    $23.49
+                  </h6>
+                </div>
+                <div class="d-flex justify-content-between px-4">
+                  <p class="mb-1 text-left">
+                    Shipping
+                  </p>
+                  <h6 class="mb-1 text-right">
+                    $2.99
+                  </h6>
+                </div>
+                <div class="d-flex justify-content-between px-4" id="tax">
+                  <p class="mb-1 text-left">
+                    Total (tax included)
+                  </p>
+                  <h6 class="mb-1 text-right">
+                    $26.48
+                  </h6>
+                </div>
+                <div class="btn-block btn-blue d-flex justify-content-between px-4">
+                  <span class="text-left">Checkout</span>
+                  <span class="text-right">$26.48</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div style="text-align:center">
+        <h3>
+          no items in your card
+        </h3>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

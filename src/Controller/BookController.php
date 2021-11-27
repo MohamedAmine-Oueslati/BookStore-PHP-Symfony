@@ -66,7 +66,7 @@ class BookController extends AbstractController
             8
         );
 
-        return $this->render('book/books.html.twig', [
+        return $this->render('book/list.html.twig', [
             'controller_name' => 'BookController',
             'books' => $bookPerPage,
             'formSearch' => $form->createView(),
@@ -95,48 +95,8 @@ class BookController extends AbstractController
             return $this->redirectToRoute('bookList');
         }
 
-        return $this->render('book/orders.html.twig', [
+        return $this->render('book/add.html.twig', [
             'formBook' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/", name="home")
-     */
-    public function home(): Response
-    {
-        return $this->render('book/home.html.twig', [
-            'controller_name' => 'BookController',
-        ]);
-    }
-
-    /**
-     * @Route("/about", name="about")
-     */
-    public function about(): Response
-    {
-        return $this->render('book/about.html.twig', [
-            'controller_name' => 'BookController',
-        ]);
-    }
-
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function contact(): Response
-    {
-        return $this->render('book/contact.html.twig', [
-            'controller_name' => 'BookController',
-        ]);
-    }
-
-    /**
-     * @Route("/faq", name="faq")
-     */
-    public function faq(): Response
-    {
-        return $this->render('book/faq.html.twig', [
-            'controller_name' => 'BookController',
         ]);
     }
 }

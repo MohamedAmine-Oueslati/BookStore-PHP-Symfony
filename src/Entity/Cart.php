@@ -25,7 +25,7 @@ class Cart
     private $book;
 
     /**
-     * @ORM\OneToOne(targetEntity=Users::class, inversedBy="cart", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Users::class, mappedBy="cart", cascade={"persist", "remove"})
      */
     private $user;
 
@@ -71,6 +71,12 @@ class Cart
     public function setUser(?Users $user): self
     {
         $this->user = $user;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCart = null === $user ? null : $this;
+        if ($user->getCart() !== $newCart) {
+            $user->setCart($newCart);
+        }
 
         return $this;
     }

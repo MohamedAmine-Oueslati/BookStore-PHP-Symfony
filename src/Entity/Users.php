@@ -56,7 +56,7 @@ class Users implements UserInterface
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity=Cart::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Cart::class, inversedBy="user", cascade={"persist", "remove"})
      */
     private $cart;
 
@@ -144,12 +144,6 @@ class Users implements UserInterface
     public function setCart(?Cart $cart): self
     {
         $this->cart = $cart;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newUser = null === $cart ? null : $this;
-        if ($cart->getUser() !== $newUser) {
-            $cart->setUser($newUser);
-        }
 
         return $this;
     }

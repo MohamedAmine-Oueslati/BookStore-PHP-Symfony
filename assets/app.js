@@ -14,6 +14,10 @@ import { Tooltip, Toast, Popover } from "bootstrap";
 import "./bootstrap";
 
 const $ = require("jquery");
+
+// create global $ and jQuery variables
+global.$ = global.jQuery = $;
+
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
 require("bootstrap");
@@ -23,5 +27,24 @@ require("bootstrap");
 // require('bootstrap/js/dist/popover');
 
 $(document).ready(function () {
-  $('[data-toggle="popover"]').popover();
+  $(".radio-group .radio").click(function () {
+    $(".radio").addClass("gray");
+    $(this).removeClass("gray");
+  });
+
+  $(".plus-minus .plus").click(function () {
+    var count = $(this).parent().prev().text();
+    $(this)
+      .parent()
+      .prev()
+      .html(Number(count) + 1);
+  });
+
+  $(".plus-minus .minus").click(function () {
+    var count = $(this).parent().prev().text();
+    $(this)
+      .parent()
+      .prev()
+      .html(Number(count) - 1);
+  });
 });

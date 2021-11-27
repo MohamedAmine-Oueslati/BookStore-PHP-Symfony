@@ -37,7 +37,7 @@ class BooksRepository extends ServiceEntityRepository
         }
         if ($search->getTitle()) {
             $query = $query->andWhere('b.title LIKE :title')
-                ->setParameter('title', $search->getTitle());
+                ->setParameter('title', '%' . $search->getTitle() . '%');
         }
         return $query->getQuery()
             ->getResult();

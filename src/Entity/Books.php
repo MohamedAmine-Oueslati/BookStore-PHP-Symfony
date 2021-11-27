@@ -6,9 +6,12 @@ use App\Repository\BooksRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=BooksRepository::class)
+ * @Vich\Uploadable()
  */
 class Books
 {
@@ -30,9 +33,16 @@ class Books
     private $author;
 
     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="book_image", fileNameProperty="imageName")
+     */
+    private $imageFile;
+
+    /**
+     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
-    private $image;
+    private $imageName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -99,18 +109,6 @@ class Books
     public function setAuthor(string $author): self
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -213,6 +211,44 @@ class Books
     public function setPrice(float $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * @return null|File
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param null|string $imageFile
+     * @return Books
+     */
+    public function setImageFile(?File $imageFile): Books
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @param null|string $imageName
+     * @return Books
+     */
+    public function setImageName(?string $imageName): Books
+    {
+        $this->imageName = $imageName;
 
         return $this;
     }

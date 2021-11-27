@@ -23,7 +23,7 @@
                     {{ book.title }}
                   </div>
                   <div class="h6 fw-bolder">
-                    {{ book.author }}
+                    by {{ book.author }}
                   </div>
                   <p>
                     {{ book.description }}
@@ -36,7 +36,9 @@
               </div>
               <div class="col-lg-6 col-xl-7">
                 <div class="bg-featured-blog"
-                  style="background-image: url({{ book.image }})"></div>
+                  style="background-image: url(/images/books/{{
+                  book.imageName
+                  }})"></div>
               </div>
             </div>
           </div>
