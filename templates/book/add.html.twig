@@ -70,7 +70,7 @@
             </div>
             <!-- Description input -->
             <div class="form-floating mb-3">
-              {{ form_widget(formBook.description) }}
+              {{ form_widget(formBook.description, {'attr': {'class': 'h-25'}}) }}
               <label for="description">Description</label>
               <div class="form-error">
                 {{ form_errors(formBook.description) }}

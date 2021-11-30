@@ -6,9 +6,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-use App\Entity\Users;
-
-class RegisterMail
+class ContactMail
 {
 
     public function __construct(MailerInterface $mailer)
@@ -16,15 +14,16 @@ class RegisterMail
         $this->mailer = $mailer;
     }
 
-    public function sendMail(Users $user)
+    public function sendMail($data)
     {
         $email = (new TemplatedEmail())
-            ->from(new Address('bookStore@gmail.com', 'BookStore'))
-            ->to(new Address($user->getEmail(), $user->getUsername()))
-            ->subject('Welcome to bookStore!')
+            ->from(new Address($data["email"], $data["fullname"]))
+            ->to(new Address('bookStore@gmail.com', 'BookStore'))
+            ->subject($data["subject"])
             ->htmlTemplate('mail.html.twig')
             ->context([
-                'type' => 'register'
+                'type' => 'contact',
+                'text' => $data["message"]
             ]);
 
         $this->mailer->send($email);

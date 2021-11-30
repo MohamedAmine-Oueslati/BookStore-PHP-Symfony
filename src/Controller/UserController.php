@@ -18,8 +18,11 @@ class UserController extends AbstractController
     /**
      * @Route("/Register", name="register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder, RegisterMail $mailer): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $encoder,
+        RegisterMail $mailer
+    ): Response {
         $entityManager = $this->getDoctrine()->getManager();
 
         $user = new Users();

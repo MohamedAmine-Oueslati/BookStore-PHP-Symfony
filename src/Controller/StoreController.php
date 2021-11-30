@@ -4,7 +4,15 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Mailer\ContactMail;
+
+
 
 class StoreController extends AbstractController
 {
@@ -31,10 +39,37 @@ class StoreController extends AbstractController
     /**
      * @Route("/contact", name="contact")
      */
-    public function contact(): Response
+    public function contact(Request $request, ContactMail $mailer): Response
     {
+
+        $contact = ["dateSent" => new \DateTime()];
+        $form = $this->createFormBuilder($contact)
+            ->add('fullname', TextType::class)
+            ->add('email', TextType::class)
+            ->add('subject', TextType::class)
+            ->add('message', TextareaType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $mailer->sendMail($data);
+
+            $this->addFlash(
+                'success',
+                "Thanks {$data['fullname']} for reaching out! We’re thrilled to hear from you"
+            );
+
+            unset($form);
+            return $this->redirectToRoute('contact');
+        }
+
         return $this->render('store/contact.html.twig', [
             'controller_name' => 'BookController',
+            'formContact' => $form->createView(),
         ]);
     }
 
