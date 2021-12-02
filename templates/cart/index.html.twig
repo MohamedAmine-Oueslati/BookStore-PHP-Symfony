@@ -9,7 +9,7 @@
 {% endblock %}
 {% block body %}
   <div class="container px-4 py-5 mx-auto">
-    {% if (cart.book|length) > 0 %}
+    {% if (cart and (cart.book|length)) > 0 %}
       <div class="row d-flex justify-content-center">
         <div class="col-5">
           <h4 class="heading">

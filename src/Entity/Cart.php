@@ -25,7 +25,7 @@ class Cart
     private $book;
 
     /**
-     * @ORM\OneToOne(targetEntity=Users::class, mappedBy="cart", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="cart", cascade={"persist", "remove"})
      */
     private $user;
 
@@ -63,12 +63,12 @@ class Cart
         return $this;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

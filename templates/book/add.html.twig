@@ -20,6 +20,10 @@
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
             {{ form_start(formBook) }}
+            <!-- Image input -->
+            <div class="form-floating">
+              {{ form_widget(formBook.imageFile, {'attr': {'class': 'form-control'}}) }}
+            </div>
             <!-- Title input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.title) }}
@@ -35,14 +39,6 @@
               <div class="form-error">
                 {{ form_errors(formBook.author) }}
               </div>
-            </div>
-            <!-- Image input -->
-            <div class="form-floating mb-3">
-              {{ form_widget(formBook.imageFile) }}
-              {# <label for="phone">Image URL</label>
-              <div class="form-error">
-                {{ form_errors(formBook.imageFile) }}
-              </div> #}
             </div>
             <!-- Genre input -->
             <div class="form-floating mb-3">

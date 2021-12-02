@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Books;
 use App\Entity\Comments;
-use App\Entity\Users;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -18,7 +18,7 @@ class BooksFixtures extends Fixture
     $Genre = ["novel", "fiction", "thriller", "romance", "drama"];
 
     for ($k = 0; $k < 5; $k++) {
-      $user = new Users();
+      $user = new User();
       $user->setEmail($faker->freeEmail)
         ->setUsername($faker->userName)
         ->setPassword($faker->password);

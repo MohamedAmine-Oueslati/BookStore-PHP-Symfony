@@ -45,6 +45,11 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if (!$entity instanceof Books) {
+            return;
+        }
+
         if (!$entity->getImageFile() instanceof Books) {
             return;
         }

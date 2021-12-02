@@ -5,19 +5,19 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\UsersRepository;
+use App\Repository\UserRepository;
 
 /**
- * @ORM\Entity(repositoryClass=UsersRepository::class)
+ * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
  *  fields={"email"},
  *  message="Email already used by another account"
  * )
  */
-class Users implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -27,7 +27,7 @@ class Users implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(message = "Please enter a valid email.")
      */
     private $email;
@@ -40,13 +40,12 @@ class Users implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Regex(pattern = "@[a-z]@",message = "Please enter a valid password.")
-     * @Assert\Length(min=6,max=255)
+     * @Assert\Regex(pattern = "/^(?=.*[a-z])(?=.*\d).{6,}$/i",message = "Password must contain at least one letter and one number.")
      */
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password", message="Please enter the same password")
+     * @Assert\EqualTo(propertyPath="password", message="Please make sure your passwords match")
      */
     public $confirm_password;
 
@@ -148,14 +147,38 @@ class Users implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
     public function getSalt()
     {
+        // not needed when using the "bcrypt" algorithm in security.yaml
     }
+
+    /**
+     * @see UserInterface
+     */
     public function eraseCredentials()
     {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

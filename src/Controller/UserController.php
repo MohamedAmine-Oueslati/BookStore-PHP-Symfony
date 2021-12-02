@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Form\RegisterType;
-use App\Entity\Users;
+use App\Entity\User;
 use App\Mailer\RegisterMail;
 
 class UserController extends AbstractController
@@ -25,7 +25,7 @@ class UserController extends AbstractController
     ): Response {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $user = new Users();
+        $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
 
         $form->handleRequest($request);
@@ -55,7 +55,7 @@ class UserController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render('user/login.html.twig', [
-            'lastUsername' => $lastUsername,
+            'last_username' => $lastUsername,
             'error' => $error
         ]);
     }

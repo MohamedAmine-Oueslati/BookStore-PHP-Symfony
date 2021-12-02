@@ -6,7 +6,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-use App\Entity\Users;
+use App\Entity\User;
 
 class RegisterMail
 {
@@ -16,7 +16,7 @@ class RegisterMail
         $this->mailer = $mailer;
     }
 
-    public function sendMail(Users $user)
+    public function sendMail(User $user)
     {
         $email = (new TemplatedEmail())
             ->from(new Address('bookStore@gmail.com', 'BookStore'))

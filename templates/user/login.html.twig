@@ -3,9 +3,7 @@
   <section class="py-5">
     <div class="container px-5">
     {% if error %}
-      <div class="alert alert-danger">
-      {{error.messageKey}}
-      </div>
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
       <!-- Login form -->
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
@@ -29,11 +27,11 @@
               <!-- Email address input -->
               <div class="form-floating mb-3">
                 <input class="form-control"
-                  id="email"
-                  type="email"
+                  id="username"
+                  type="text"
                   name="_username"
                   data-sb-validations="required,email"
-                  value={{lastUsername}} />
+                  value={{last_username}} />
                 <label for="email">Email address</label>
               </div>
               <!-- Password input -->
