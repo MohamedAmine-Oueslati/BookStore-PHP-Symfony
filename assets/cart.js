@@ -1,27 +1,25 @@
-const $ = require("jquery");
+import "./styles/cart.css";
 
-// create global $ and jQuery variables
+const $ = require("jquery");
 global.$ = global.jQuery = $;
-// const $ = require("jquery");
+
 $(document).ready(function () {
   $(".radio-group .radio").click(function () {
     $(".radio").addClass("gray");
     $(this).removeClass("gray");
   });
+});
 
-  $(".plus-minus .plus").click(function () {
-    var count = $(this).parent().prev().text();
-    $(this)
-      .parent()
-      .prev()
-      .html(Number(count) + 1);
-  });
+$(document).on("keyup mouseup", "#quantity", function () {
+  var quantity = $("#quantity").val();
+  var price = $("#price-unit").text();
+  console.log(Number(price));
+  $("#price").text((quantity * Number(price)).toFixed(2));
+});
 
-  $(".plus-minus .minus").click(function () {
-    var count = $(this).parent().prev().text();
-    $(this)
-      .parent()
-      .prev()
-      .html(Number(count) - 1);
-  });
+$(":input").each(function (index, val) {
+  console.log(index, val);
+  //   $(this).click(function () {
+  //     alert(index + " has value: " + $(this).val());
+  //   });
 });

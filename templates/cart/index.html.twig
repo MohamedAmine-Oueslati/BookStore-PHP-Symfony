@@ -5,7 +5,12 @@
 {% endblock %}
 {% block stylesheets %}
   {{ parent() }}
-  <link rel="stylesheet" href="style/cart.css" />
+  {{ encore_entry_link_tags('cart') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('cart') }}
 {% endblock %}
 {% block body %}
   <div class="container px-4 py-5 mx-auto">
@@ -18,17 +23,22 @@
         </div>
         <div class="col-7">
           <div class="row text-right">
-            <div class="col-4">
+            <div class="col-3">
+              <h6 class="mt-2">
+                Unit
+              </h6>
+            </div>
+            <div class="col-3">
               <h6 class="mt-2">
                 Quantity
               </h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <h6 class="mt-2">
                 Price
               </h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <h6 class="mt-2"></h6>
             </div>
           </div>
@@ -54,21 +64,30 @@
           </div>
           <div class="my-auto col-7">
             <div class="row text-right">
-              <div class="col-4">
-                <div class="d-flex justify-content-start input-number">
-                  <input type="number"
-                    class="form-control form-control-lg text-center"
-                    value="1" />
-                </div>
-              </div>
-              <div class="col-4">
+              <div class="col-3">
                 <div>
                   <h6 class="mob-text mt-2">
-                    ${{ book.price|number_format(2) }}
+                    $<span id="price-unit">{{ book.price|number_format(2) }}</span>
                   </h6>
                 </div>
               </div>
-              <div class="col-4">
+              <div class="col-3">
+                <div class="d-flex justify-content-start input-number">
+                  <input type="number"
+                    id="quantity"
+                    class="form-control form-control-lg text-center"
+                    value="1"
+                    min="1" />
+                </div>
+              </div>
+              <div class="col-3">
+                <div>
+                  <h6 class="mob-text mt-2">
+                    $<span id="price">{{ book.price|number_format(2) }}</span>
+                  </h6>
+                </div>
+              </div>
+              <div class="col-3">
                 <form method="POST"
                   action="{{
                   path(
