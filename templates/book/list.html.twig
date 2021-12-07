@@ -56,23 +56,23 @@
                 </div>
               </a>
               <a href="{{
-                app.user
-                  ? path(
-                    'cart_list',
+                app.session.get('cart')[book.id] is defined
+                  ? path('cart')
+                  : path(
+                    'cart_increase_quantity',
                     {
                       id: book.id
                     }
                   )
-                  : path('login')
                 }}"
                 class="btn {{
-                app.user and app.user.cart and book in app.user.cart.book
+                app.session.get('cart')[book.id] is defined
                   ? 'btn-outline-primary'
                   : 'btn-primary'
                 }}">
                 <i class="bi-bag"></i>
                 <span class="m-2">
-                  {{ app.user and app.user.cart and book in app.user.cart.book
+                  {{ app.session.get('cart')[book.id] is defined
                     ? 'In Cart'
                     : 'Add to Cart' }}
                 </span>

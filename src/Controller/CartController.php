@@ -3,63 +3,90 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-use App\Entity\Cart;
 use App\Entity\Books;
+use App\Repository\BooksRepository;
 
 class CartController extends AbstractController
 {
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/cart", name="cart")
      */
-    public function index(): Response
+    public function index(SessionInterface $session, BooksRepository $booksRepo): Response
     {
-        $cart = $this->getUser()->getCart();
+        $cart = $session->get('cart', []);
+
+        $dataCart = [];
+        $total = 0;
+
+        foreach ($cart as $id => $quantity) {
+            $book = $booksRepo->find($id);
+            $dataCart[] = [
+                "book" => $book,
+                "quantity" => $quantity
+            ];
+
+            $total += $book->getPrice() * $quantity;
+        }
 
         return $this->render('cart/index.html.twig', [
-            'cart' => $cart,
+            'dataCart' => $dataCart,
+            'total' => $total
         ]);
     }
 
     /**
-     * @Route("/cart/{id}", name="cart_list")
+     * @Route("/cart/increase/{id}", name="cart_increase_quantity")
      */
-    public function cartList(Books $book): Response
+    public function increaseBookQuantity(SessionInterface $session, Books $book): Response
     {
-        $user = $this->getUser();
-        $cart = $user->getCart();
-        if (!$cart) {
-            $cart = new Cart();
-            $cart->setUser($user);
+        $cart = $session->get('cart', []);
+        $id = $book->getId();
+
+        if (!empty($cart[$id])) {
+            $cart[$id]++;
+        } else {
+            $cart[$id] = 1;
         }
 
-        $cart->addBook($book);
+        $session->set('cart', $cart);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($cart);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('bookList');
+        return $this->redirectToRoute('cart');
     }
 
     /**
-     * @Route("cart/delete/{id}", name="cart_delete")
+     * @Route("cart/decrease/{id}", name="cart_decrease_quantity")
      */
-    public function delete(Books $book): Response
+    public function decreaseBookQuantity(SessionInterface $session, Books $book): Response
     {
+        $cart = $session->get('cart', []);
+        $id = $book->getId();
 
-        // if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
-        $cart = $this->getUser()->getCart();
-        $cart->removeBook($book);
+        if ($cart[$id] > 1) {
+            $cart[$id]--;
+        } else {
+            unset($cart[$id]);
+        }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
-        // }
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('cart');
+    }
+
+    /**
+     * @Route("cart/remove/{id}", name="cart_remove_book")
+     */
+    public function removeBook(SessionInterface $session, Books $book): Response
+    {
+        $cart = $session->get('cart', []);
+        $id = $book->getId();
+
+        unset($cart[$id]);
+
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('cart');
     }
