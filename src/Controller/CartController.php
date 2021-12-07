@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use App\Entity\Cart;
 use App\Entity\Books;
@@ -14,14 +14,12 @@ use App\Entity\Books;
 class CartController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/cart", name="cart")
      */
-    public function index(Security $security): Response
+    public function index(): Response
     {
-
-        $user = $security->getUser();
-        $cart = $user->getCart();
-        // dd($cart);
+        $cart = $this->getUser()->getCart();
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
@@ -31,9 +29,9 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/{id}", name="cart_list")
      */
-    public function cartList(Security $security, Books $book): Response
+    public function cartList(Books $book): Response
     {
-        $user = $security->getUser();
+        $user = $this->getUser();
         $cart = $user->getCart();
         if (!$cart) {
             $cart = new Cart();
@@ -46,18 +44,17 @@ class CartController extends AbstractController
         $entityManager->persist($cart);
         $entityManager->flush();
 
-        // return $this->forward('App\Controller\BookController::bookList');
         return $this->redirectToRoute('bookList');
     }
 
     /**
      * @Route("cart/delete/{id}", name="cart_delete")
      */
-    public function delete(Security $security, Books $book): Response
+    public function delete(Books $book): Response
     {
 
         // if ($this->isCsrfTokenValid('delete' . $comment->getId(), $request->request->get('_token'))) {
-        $cart = $security->getUser()->getCart();
+        $cart = $this->getUser()->getCart();
         $cart->removeBook($book);
 
         $entityManager = $this->getDoctrine()->getManager();

@@ -21,6 +21,9 @@ class StoreController extends AbstractController
      */
     public function home(): Response
     {
+
+        // session_start();
+        // dd(unserialize($_SESSION["_sf2_attributes"]["_security_main"]));
         return $this->render('store/home.html.twig', [
             'controller_name' => 'BookController',
         ]);

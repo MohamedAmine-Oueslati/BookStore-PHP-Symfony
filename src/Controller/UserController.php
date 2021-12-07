@@ -8,9 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Security\AppAuthenticator;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 use App\Form\RegisterType;
 use App\Entity\User;
+use App\Entity\Cart;
 use App\Mailer\RegisterMail;
 
 class UserController extends AbstractController
@@ -21,7 +24,9 @@ class UserController extends AbstractController
     public function register(
         Request $request,
         UserPasswordEncoderInterface $encoder,
-        RegisterMail $mailer
+        RegisterMail $mailer,
+        AppAuthenticator $authenticator,
+        GuardAuthenticatorHandler $guardHandler
     ): Response {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -34,12 +39,21 @@ class UserController extends AbstractController
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
 
+            $cart = new Cart();
+            $user->setCart($cart);
+            // dd($user);
             $entityManager->persist($user);
             $entityManager->flush();
 
             $mailer->sendMail($user);
 
-            return $this->redirectToRoute('bookList');
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,          // the User object you just created
+                $request,
+                $authenticator, // authenticator whose onAuthenticationSuccess you want to use
+                'main'          // the name of your firewall in security.yaml
+            );
+            // return $this->redirectToRoute('bookList');
         }
 
         return $this->render('user/register.html.twig', [
@@ -65,5 +79,6 @@ class UserController extends AbstractController
      */
     public function logout()
     {
+        // throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

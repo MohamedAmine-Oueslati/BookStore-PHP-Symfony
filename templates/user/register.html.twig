@@ -50,6 +50,10 @@
                 {{ form_errors(formUser.confirm_password) }}
               </div>
             </div>
+            <!-- Accepted Terms input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formUser.termsAccepted) }}
+            </div>
             <!-- Submit Button -->
             <div class="d-grid">
               {{ form_widget(formUser.register) }}

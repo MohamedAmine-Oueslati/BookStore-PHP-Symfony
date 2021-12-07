@@ -2,9 +2,11 @@
 {% block body %}
   <section class="py-5">
     <div class="container px-5">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+      {% if error %}
+        <div class="alert alert-danger">
+          {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+      {% endif %}
       <!-- Login form -->
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="text-center mb-5">
@@ -27,11 +29,12 @@
               <!-- Email address input -->
               <div class="form-floating mb-3">
                 <input class="form-control"
-                  id="username"
-                  type="text"
-                  name="_username"
-                  data-sb-validations="required,email"
-                  value={{last_username}} />
+                  id="email"
+                  type="email"
+                  name="email"
+                  value="{{ last_username }}"
+                  required
+                  autofocus />
                 <label for="email">Email address</label>
               </div>
               <!-- Password input -->
@@ -39,11 +42,13 @@
                 <input class="form-control"
                   id="password"
                   type="password"
-                  name="_password"
-                  data-sb-validations="required" />
+                  name="password"
+                  required />
                 <label for="phone">Password</label>
               </div>
-              <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+              <input type="hidden"
+                name="_csrf_token"
+                value="{{ csrf_token('authenticate') }}" />
               <!-- Submit Button -->
               <div class="d-grid">
                 <button class="btn btn-primary btn-lg"

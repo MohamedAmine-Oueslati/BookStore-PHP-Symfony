@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use App\Form\BookType;
 use App\Entity\Books;
@@ -74,6 +75,7 @@ class BookController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/AddBook", name="AddBook")
      */
     public function addBook(request $request): Response
