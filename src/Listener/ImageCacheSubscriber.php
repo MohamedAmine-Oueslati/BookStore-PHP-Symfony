@@ -2,7 +2,7 @@
 
 namespace App\Listener;
 
-use App\Entity\Books;
+use App\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -36,25 +36,25 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity->getImageFile() instanceof Books) {
+        if (!$entity->getAvatar() instanceof User) {
             return;
         }
-        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
+        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatar'));
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Books) {
+        if (!$entity instanceof User) {
             return;
         }
 
-        if (!$entity->getImageFile() instanceof Books) {
+        if (!$entity->getAvatar() instanceof User) {
             return;
         }
-        if ($entity->getImageFile() instanceof UploadedFile) {
-            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'imageFile'));
+        if ($entity->getAvatar() instanceof UploadedFile) {
+            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatar'));
         }
     }
 }

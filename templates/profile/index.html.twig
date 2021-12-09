@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Profil
+{% endblock %}
+{# {% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('profil') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('profil') }}
+{% endblock %} #}
+
+{% block body %}
+  <head>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+      rel="stylesheet" />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    {% include 'profile/css.css' %}
+  </style>
+
+  <div class="main main-raised">
+    <div class="profile-content">
+      <div class="container">
+        <div class="row">
+          <div class="ml-auto mr-auto">
+            <div class="profile text-center">
+              <div class="avatar">
+              {% if app.user.avatarName == "" %}
+                <img src="{{ asset('images/avatar.jpg') }}"
+                  alt="Circle Image"
+                  width="200"
+                  class="img-raised rounded-circle img-fluid" />
+              {% else %}
+                <img src="/images/user/{{ app.user.avatarName }}"
+                  alt="Circle Image"
+                  width="200"
+                  class="img-raised rounded-circle img-fluid" />
+              {% endif %}
+              </div>
+              <div class="name">
+                <h3 class="title">
+                  {{ app.user.fullName
+                    ? app.user.fullName
+                    : app.user.username }}
+                </h3>
+                <h6>
+                  {{ app.user.email }}
+                </h6>
+                {% if app.user.social.facebook %}
+                  <a href="{{ app.user.social.facebook }}"
+                    target="_blank"
+                    class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                {% else %}
+                  <span class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-facebook"></i>
+                  </span>
+                {% endif %}
+                {% if app.user.social.twitter %}
+                  <a href="{{ app.user.social.twitter }}"
+                    target="_blank"
+                    class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                {% else %}
+                  <span class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-twitter"></i>
+                  </span>
+                {% endif %}
+                {% if app.user.social.instagram %}
+                  <a href="{{ app.user.social.instagram }}"
+                    target="_blank"
+                    class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-instagram"></i>
+                  </a>
+                {% else %}
+                  <span class="btn btn-just-icon btn-link btn-instagram">
+                    <i class="fa fa-instagram"></i>
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row description text-center">
+          <p>
+            {{ app.user.about ? app.user.about : 'Write some words about you' }}
+          </p>
+        </div>
+        <div class="row text-center ml-auto mr-auto">
+          <ul class="nav nav-pills nav-pills-icons justify-content-center"
+            role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active"
+                href="#studio"
+                role="tab"
+                data-toggle="tab">
+                <i class="material-icons">camera</i>
+                STUDIO
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#works" role="tab" data-toggle="tab">
+                <i class="material-icons">palette</i>
+                WORK
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#favorite" role="tab" data-toggle="tab">
+                <i class="material-icons">favorite</i>
+                FAVORITE
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+      {{ form_start(formProfile) }}
+      <div class="p-5 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">
+            Profile Edit
+          </h4>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <label class="labels">Avatar</label>
+            {{ form_widget(formProfile.avatar, {'attr': {'class': 'form-control'}}) }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label class="labels">Full Name</label>
+            {{ form_widget(formProfile.fullName) }}
+          </div>
+          <div class="col-md-4">
+            <label class="labels">Username</label>
+            {{ form_widget(formProfile.username) }}
+          </div>
+          <div class="col-md-4">
+            <label class="labels">Email Address</label>
+            {{ form_widget(formProfile.email) }}
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-4">
+            <label class="labels">Facebook</label><input type="url"
+              class="form-control"
+              placeholder="facebook link"
+              name="facebook"
+              value="{{ app.user.social.facebook }}" />
+          </div>
+          <div class="col-md-4">
+            <label class="labels">Twitter</label><input type="url"
+              class="form-control"
+              placeholder="twitter link"
+              name="twitter"
+              value="{{ app.user.social.twitter }}" />
+          </div>
+          <div class="col-md-4">
+            <label class="labels">Instagram</label><input type="url"
+              class="form-control"
+              placeholder="instagram link"
+              name="instagram"
+              value="{{ app.user.social.instagram }}" />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-12">
+            <label class="labels">About</label>
+            {{ form_widget(formProfile.about) }}
+          </div>
+        </div>
+        <div class="mt-5 text-center">
+          {{ form_widget(formProfile.submit) }}
+        </div>
+      </div>
+      {{ form_end(formProfile) }}
+    </div>
+  </div>
+{% endblock %}
