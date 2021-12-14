@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,17 +16,17 @@ class ProfileController extends AbstractController
     public function index(Request $request): Response
     {
         $user = $this->getUser();
-        // dd($user);
-        $form = $this->createForm(ProfileType::class, $user);
+        $profile = $user->getProfile();
+
+        $form = $this->createForm(ProfileType::class, $profile);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setSocial([
-                'facebook' => $request->request->get('facebook'),
-                'twitter' => $request->request->get('twitter'),
-                'instagram' => $request->request->get('instagram')
-            ]);
+
+            $user->setUsername($request->request->get('username'));
+            $user->setEmail($request->request->get('email'));
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
@@ -36,6 +35,7 @@ class ProfileController extends AbstractController
 
         return $this->render('profile/index.html.twig', [
             'formProfile' => $form->createView(),
+            'user' => $user
         ]);
     }
 }

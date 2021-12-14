@@ -1,5 +1,5 @@
 body {
-    background: rgb(99, 39, 120)
+    background: rgb(213, 227, 255)
 }
 
 .labels {
@@ -50,6 +50,22 @@ body {
     height: auto;
 }
 
+.image-cropper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+.img-rounded {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+    margin-left:-25% 
+  }
+
 .title {
     margin-top: 30px;
     margin-bottom: 25px;
@@ -80,8 +96,8 @@ p {
 
 .nav-pills .nav-item .nav-link.active {
     color: #fff;
-    background-color: #9c27b0;
-    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
+    background-color: #5272ff;
+    box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(142, 204, 255, 0.6);
 }
 
 .nav-pills .nav-item .nav-link {

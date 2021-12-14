@@ -13,6 +13,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 use App\Form\RegisterType;
 use App\Entity\User;
+use App\Entity\Profile;
 use App\Entity\Cart;
 use App\Mailer\RegisterMail;
 
@@ -40,8 +41,10 @@ class UserController extends AbstractController
             $user->setPassword($hash);
 
             $cart = new Cart();
+            $profile = new Profile();
             $user->setCart($cart);
-            // dd($user);
+            $user->setProfile($profile);
+
             $entityManager->persist($user);
             $entityManager->flush();
 

@@ -8,13 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use App\Repository\UserRepository;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @Vich\Uploadable()
  * @UniqueEntity(
  *  fields={"email"},
  *  message="Email already used by another account"
@@ -63,31 +60,9 @@ class User implements UserInterface
     private $cart;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity=Profile::class, inversedBy="user", cascade={"persist", "remove"})
      */
-    private $fullName;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $about;
-
-    /**
-     * @var File|null
-     * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
-     */
-    private $avatar;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=255)
-     */
-    private $avatarName;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $social = [];
+    private $Profile;
 
     public function __construct()
     {
@@ -212,76 +187,14 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFullName(): ?string
+    public function getProfile(): ?Profile
     {
-        return $this->fullName;
+        return $this->Profile;
     }
 
-    public function setFullName(?string $fullName): self
+    public function setProfile(?Profile $Profile): self
     {
-        $this->fullName = $fullName;
-
-        return $this;
-    }
-
-    public function getAbout(): ?string
-    {
-        return $this->about;
-    }
-
-    public function setAbout(?string $about): self
-    {
-        $this->about = $about;
-
-        return $this;
-    }
-
-    /**
-     * @return null|File
-     */
-    public function getAvatar(): ?File
-    {
-        return $this->avatar;
-    }
-
-    /**
-     * @param null|string $avatar
-     * @return User
-     */
-    public function setAvatar(?File $avatar): User
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getAvatarName(): ?string
-    {
-        return $this->avatarName;
-    }
-
-    /**
-     * @param null|string $avatarName
-     * @return User
-     */
-    public function setAvatarName(?string $avatarName): User
-    {
-        $this->avatarName = $avatarName;
-
-        return $this;
-    }
-
-    public function getSocial(): ?array
-    {
-        return $this->social;
-    }
-
-    public function setSocial(?array $social): self
-    {
-        $this->social = $social;
+        $this->Profile = $Profile;
 
         return $this;
     }

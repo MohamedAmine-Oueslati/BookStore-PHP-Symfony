@@ -2,7 +2,8 @@
 
 namespace App\Listener;
 
-use App\Entity\User;
+use App\Entity\Avatar;
+use App\Entity\Profile;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -36,25 +37,25 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity->getAvatar() instanceof User) {
+        if (!$entity->getUserAvatar() instanceof Avatar) {
             return;
         }
-        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatar'));
+
+        $this->cacheManager->remove($this->uploaderHelper->asset($entity->getUserAvatar(), 'avatarFile'));
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
-
-        if (!$entity instanceof User) {
+        if (!$entity instanceof Profile) {
             return;
         }
 
-        if (!$entity->getAvatar() instanceof User) {
+        if (!$entity->getUserAvatar() instanceof Avatar) {
             return;
         }
-        if ($entity->getAvatar() instanceof UploadedFile) {
-            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatar'));
+        if ($entity->getUserAvatar()->getAvatarFile() instanceof UploadedFile) {
+            $this->cacheManager->remove($this->uploaderHelper->asset($entity->getUserAvatar(), 'avatarFile'));
         }
     }
 }
