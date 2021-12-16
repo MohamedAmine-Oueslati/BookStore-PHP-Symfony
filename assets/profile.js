@@ -1,4 +1,4 @@
-import "./styles/cart.css";
+import "./styles/profile.css";
 
 const $ = require("jquery");
 global.$ = global.jQuery = $;

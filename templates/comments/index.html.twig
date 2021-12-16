@@ -13,13 +13,39 @@
           {% for idx, comment in comments|reverse %}
             <div class="d-flex mb-4">
               <div class="flex-shrink-0">
-                <img class="rounded-circle"
-                  src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
-                  alt="..." />
+                <a href="{{
+                  path(
+                    'profile',
+                    {
+                      id: comment.author.id
+                    }
+                  )
+                  }}">
+                  <img class="rounded-circle"
+                    src="{{
+                    comment.author.profile.userAvatar
+                      and comment.author.profile.userAvatar.avatarName
+                      ? '/images/userAvatar/'
+                        ~ comment.author.profile.userAvatar.avatarName
+                      : '/images/avatar.jpg'
+                    }}"
+                    style="width: 50px; height: 50px; object-fit: cover;"
+                    alt="user avatar" />
+                </a>
               </div>
               <div class="ms-3">
                 <div class="fw-bold">
-                  {{ comment.author.username }}
+                  <a class="text-decoration-none link-dark"
+                    href="{{
+                    path(
+                      'profile',
+                      {
+                        id: comment.author.id
+                      }
+                    )
+                    }}">
+                    {{ comment.author.username }}
+                  </a>
                   <small class="text-muted">
                     ({{ comment.createdAt|date('d/m/Y H:i') }})
                   </small>

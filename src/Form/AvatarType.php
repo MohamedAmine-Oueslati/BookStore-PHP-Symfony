@@ -13,7 +13,7 @@ class AvatarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('avatarFile', FileType::class, ["required" => false]);
+            ->add('avatarFile', FileType::class, ['attr' => ['class' => 'form-control'], "required" => false, 'label' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

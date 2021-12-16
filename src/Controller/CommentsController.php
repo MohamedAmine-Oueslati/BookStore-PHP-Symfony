@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
 
 use App\Form\CommentType;
 use App\Entity\Comments;
@@ -27,13 +26,12 @@ class CommentsController extends AbstractController
     /**
      * @Route("/new", name="comments_new", methods={"GET","POST"})
      */
-    public function new(Security $security, $comment, $book): Response
+    public function new($comment, $book): Response
     {
 
-        $user = $security->getUser();
         $comment->setCreatedAt(new \DateTime())
             ->setBook($book)
-            ->setAuthor($user);
+            ->setAuthor($this->getUser());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($comment);
         $entityManager->flush();

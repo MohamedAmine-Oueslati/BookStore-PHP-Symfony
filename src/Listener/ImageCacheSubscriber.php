@@ -37,6 +37,11 @@ class ImageCacheSubscriber implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
+        if (!$entity instanceof Profile) {
+            return;
+        }
+
         if (!$entity->getUserAvatar() instanceof Avatar) {
             return;
         }
