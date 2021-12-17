@@ -11,21 +11,24 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Mailer\ContactMail;
-
-
+use App\Repository\BlogRepository;
 
 class StoreController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function home(): Response
+    public function home(BlogRepository $blogRepo): Response
     {
+
+        $blog = $blogRepo->findBy(array(), array('createdAt' => 'DESC'), 3);
 
         // session_start();
         // dd(unserialize($_SESSION["_sf2_attributes"]["_security_main"]));
+
+
         return $this->render('store/home.html.twig', [
-            'controller_name' => 'BookController',
+            'blog' => $blog,
         ]);
     }
 

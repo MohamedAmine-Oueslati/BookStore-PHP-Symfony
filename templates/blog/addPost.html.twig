@@ -1,0 +1,53 @@
+{# {% form_theme formBlog 'bootstrap_4_layout.html.twig' %} #}
+
+{% extends 'base.html.twig' %}
+{% block body %}
+  <section class="py-5">
+    <div class="container px-5">
+      <!-- Book form -->
+      <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+        <div class="text-center mb-5">
+          <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+            <i class="bi bi-book"></i>
+          </div>
+          <h1 class="fw-bolder">
+            Create Blog Post
+          </h1>
+          <p class="lead fw-normal text-muted mb-0">
+            BookStore is your one-stop-shop to sell your Books
+          </p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+          <div class="col-lg-8 col-xl-8">
+            {{ form_start(formBlog) }}
+            <!-- Image input -->
+            <div class="form-floating">
+              {{ form_widget(formBlog.imageFile, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <!-- Title input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBlog.title) }}
+              <label for="title">Title</label>
+              <div class="form-error">
+                {{ form_errors(formBlog.title) }}
+              </div>
+            </div>
+            <!-- Description input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBlog.content, {'attr': {'class': 'h-25'}}) }}
+              <label for="description">Content</label>
+              <div class="form-error">
+                {{ form_errors(formBlog.content) }}
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="d-grid">
+              {{ form_widget(formBlog.submit) }}
+            </div>
+            {{ form_end(formBlog) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

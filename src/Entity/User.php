@@ -64,9 +64,15 @@ class User implements UserInterface
      */
     private $Profile;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Blog::class, mappedBy="user")
+     */
+    private $blogs;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->blogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,6 +201,36 @@ class User implements UserInterface
     public function setProfile(?Profile $Profile): self
     {
         $this->Profile = $Profile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Blog[]
+     */
+    public function getBlogs(): Collection
+    {
+        return $this->blogs;
+    }
+
+    public function addBlog(Blog $blog): self
+    {
+        if (!$this->blogs->contains($blog)) {
+            $this->blogs[] = $blog;
+            $blog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBlog(Blog $blog): self
+    {
+        if ($this->blogs->removeElement($blog)) {
+            // set the owning side to null (unless already changed)
+            if ($blog->getUser() === $this) {
+                $blog->setUser(null);
+            }
+        }
 
         return $this;
     }
