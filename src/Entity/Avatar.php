@@ -6,7 +6,7 @@ use App\Repository\AvatarRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AvatarRepository::class)
@@ -22,16 +22,28 @@ class Avatar implements \Serializable
     private $id;
 
     /**
-     * @var File
+     * @var File|null
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
+     * @Assert\File(
+     *     maxSize = "2000k",
+     *     mimeTypes = {"image/jpeg", "image/gif"},
+     *     mimeTypesMessage = "Please upload a valid file"
+     * )
      */
     private $avatarFile;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255)
      */
     private $avatarName;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTimeInterface|null
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -47,15 +59,18 @@ class Avatar implements \Serializable
         return $this->avatarFile;
     }
 
-    public function setAvatarFile(?File $fileName = null)
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $avatarFile
+     */
+    public function setAvatarFile(?File $avatarFile = null): void
     {
-        $this->avatarFile = $fileName;
+        $this->avatarFile = $avatarFile;
 
-        if ($fileName) {
-            $this->createdAt = new \DateTime('now');
+        if (null !== $avatarFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
         }
-
-        // return $this;
     }
 
     public function getAvatarName(): ?string

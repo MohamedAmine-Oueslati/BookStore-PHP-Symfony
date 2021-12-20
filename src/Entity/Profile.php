@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProfileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProfileRepository::class)
@@ -19,26 +20,37 @@ class Profile
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=6,max=255)
      */
     private $fullName;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(min=12)
      */
     private $about;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $facebookUrl;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $twitterUrl;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
      */
     private $instagramUrl;
 

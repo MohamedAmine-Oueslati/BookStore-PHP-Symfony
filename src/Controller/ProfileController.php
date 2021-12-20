@@ -20,42 +20,35 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile/{id}", name="profile")
      */
-    public function index(Request $request, User $user): Response
+    public function index(User $user): Response
+    {
+
+        return $this->render('profile/index.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/profile/{id}/edit", name="profile_edit")
+     */
+    public function edit(Request $request, User $user): Response
     {
         $profile = $user->getProfile();
 
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
 
-        $this->forward('App\Controller\ProfileController::edit', [
-            'user' => $user,
-            'form' => $form,
-            'request' => $request
-        ]);
-
-        return $this->render('profile/index.html.twig', [
-            'formProfile' => $form->createView(),
-            'user' => $user
-        ]);
-    }
-
-    /**
-     * @Route("/edit", name="profile_edit")
-     */
-    public function edit($user, $form, $request): Response
-    {
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user->setUsername($request->request->get('username'));
-            $user->setEmail($request->request->get('email'));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('profile', ['id' => $user->getId()]);
         }
 
-        return $this->render('profile/edit.html.twig', []);
+        return $this->render('profile/edit.html.twig', [
+            'formProfile' => $form->createView(),
+            'user' => $user
+        ]);
     }
 }

@@ -19,6 +19,22 @@
 
 {% block body %}
   <div id="profile_modal" class="main main-raised">
+    {% if user.email == app.user.email %}
+      <div class="d-grid gap-2 col-2 btn-edit">
+        <a href="{{
+          path(
+            'profile_edit',
+            {
+              id: user.id
+            }
+          )
+          }}"
+          class="btn btn-primary"
+          type="button">
+          Edit Profile
+        </a>
+      </div>
+    {% endif %}
     <div class="profile-content">
       <div class="container">
         <div class="row">
@@ -94,35 +110,29 @@
                 : '' }}
           </p>
         </div>
-        {% if user.email == app.user.email %}
-          <div class="row text-center ml-auto mr-auto">
-            <ul class="nav nav-pills nav-pills-icons justify-content-center">
-              <li class="nav-item">
-                <span id="blog_post" class="nav-link active">
-                  <i class="material-icons">description</i>
-                  BLOG
-                </span>
-              </li>
-              <li class="nav-item">
-                <span id="followers" class="nav-link">
-                  <i class="material-icons">favorite</i>
-                  FOLLOWERS
-                </span>
-              </li>
-              <li class="nav-item">
-                <span id="edit_profile" class="nav-link">
-                  <i class="material-icons">edit</i>
-                  EDIT
-                </span>
-              </li>
-            </ul>
-          </div>
-        {% endif %}
+        <div class="row text-center ml-auto mr-auto">
+          <ul class="nav nav-pills nav-pills-icons justify-content-center">
+            <li class="nav-item">
+              <span id="blog_post" class="nav-link active">
+                <i class="material-icons">description</i>
+                BLOG
+              </span>
+            </li>
+            <li class="nav-item">
+              <span id="followers" class="nav-link">
+                <i class="material-icons">favorite</i>
+                FOLLOWERS
+              </span>
+            </li>
+            <li class="nav-item">
+              <span id="edit_profile" class="nav-link">
+                <i class="material-icons">edit</i>
+                EDIT
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div id="edit_modal" class="main main-raised d-none">
-    {{ include('profile/edit.html.twig', {}) }}
   </div>
 {% endblock %}

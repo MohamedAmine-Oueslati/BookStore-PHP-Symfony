@@ -1,5 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Profile
+{% endblock %}
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('profile') }}
+{% endblock %}
+
 {% block body %}
-  <div>
+  <div class="main main-raised">
     <div class="row">
       {{ form_start(formProfile) }}
       <div class="p-5 py-5">
@@ -11,46 +21,66 @@
         <div class="row mt-2">
           <div class="col-md-12">
             {{ form_widget(formProfile.userAvatar) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.userAvatar) }}
+            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-4">
             <label class="labels">Full Name</label>
             {{ form_widget(formProfile.fullName) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.fullName) }}
+            </div>
           </div>
           <div class="col-md-4">
             <label class="labels">Username</label>
             <input type="text"
               class="form-control"
               name="username"
-              value="{{ user.username }}" />
+              value="{{ user.username }}"
+              readonly />
           </div>
           <div class="col-md-4">
             <label class="labels">Email Address</label>
             <input type="email"
               class="form-control"
               name="email"
-              value="{{ user.email }}" />
+              value="{{ user.email }}"
+              readonly />
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-md-4">
             <label class="labels">Facebook</label>
             {{ form_widget(formProfile.facebookUrl) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.facebookUrl) }}
+            </div>
           </div>
           <div class="col-md-4">
             <label class="labels">Twitter</label>
             {{ form_widget(formProfile.twitterUrl) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.twitterUrl) }}
+            </div>
           </div>
           <div class="col-md-4">
             <label class="labels">Instagram</label>
             {{ form_widget(formProfile.instagramUrl) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.instagramUrl) }}
+            </div>
           </div>
         </div>
         <div class="row mt-3">
           <div class="col-md-12">
             <label class="labels">About</label>
             {{ form_widget(formProfile.about) }}
+            <div class="form-error">
+              {{ form_errors(formProfile.about) }}
+            </div>
           </div>
         </div>
         <div class="mt-5 text-center">

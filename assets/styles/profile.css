@@ -154,3 +154,9 @@ p {
     background-color: transparent;
     color: #999;
 }
+
+.btn-edit {
+    top:10px;
+    left:10px;
+    position:absolute;
+}

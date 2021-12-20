@@ -38,29 +38,27 @@ class ImageCacheSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        if (!$entity instanceof Profile) {
+        if (!$entity instanceof Profile && !$entity instanceof Avatar) {
             return;
         }
 
-        if (!$entity->getUserAvatar() instanceof Avatar) {
-            return;
-        }
+        $entity = $entity instanceof Profile ? $entity->getUserAvatar() : $entity;
 
-        $this->cacheManager->remove($this->uploaderHelper->asset($entity->getUserAvatar(), 'avatarFile'));
+        $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatarFile'));
     }
 
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entity = $args->getEntity();
-        if (!$entity instanceof Profile) {
+
+        if (!$entity instanceof Profile && !$entity instanceof Avatar) {
             return;
         }
 
-        if (!$entity->getUserAvatar() instanceof Avatar) {
-            return;
-        }
-        if ($entity->getUserAvatar()->getAvatarFile() instanceof UploadedFile) {
-            $this->cacheManager->remove($this->uploaderHelper->asset($entity->getUserAvatar(), 'avatarFile'));
+        $entity = $entity instanceof Profile ? $entity->getUserAvatar() : $entity;
+
+        if ($entity->getAvatarFile() instanceof UploadedFile) {
+            $this->cacheManager->remove($this->uploaderHelper->asset($entity, 'avatarFile'));
         }
     }
 }
