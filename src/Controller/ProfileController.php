@@ -34,6 +34,7 @@ class ProfileController extends AbstractController
     public function edit(Request $request, User $user): Response
     {
         $profile = $user->getProfile();
+        $this->denyAccessUnlessGranted('PROFILE_EDIT', $profile, "Access Denied You Don’t Have Permission To Edit This Profile");
 
         $form = $this->createForm(ProfileType::class, $profile);
         $form->handleRequest($request);
