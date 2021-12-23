@@ -207,10 +207,11 @@
                     ${{ (total + 2.99)|number_format(2) }}
                   </h6>
                 </div>
-                <div class="btn-block btn-blue d-flex justify-content-between px-4">
+                <div id="btn-checkout"
+                  class="btn-block btn-blue d-flex justify-content-between px-4">
                   <span class="text-left">Checkout</span>
                   <span class="text-right">
-                    ${{ (total + 2.99)|number_format(2) }}
+                    $<span id="checkout">{{ (total + 2.99)|number_format(2) }}</span>
                   </span>
                 </div>
               </div>
@@ -219,11 +220,15 @@
         </div>
       </div>
     {% else %}
-      <div style="text-align:center">
-        <h3>
-          no items in your card
-        </h3>
-      </div>
+      <blockquote class="blockquote text-center">
+        <p class="mb-5 h3">
+          No Items In Your Cart
+        </p>
+        <a class="stretched-link text-decoration-none" href="/BookList">
+          <i class="bi bi-arrow-right"></i>
+          Click to add books
+        </a>
+      </blockquote>
     {% endif %}
   </div>
 {% endblock %}

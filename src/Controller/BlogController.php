@@ -18,13 +18,18 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog", name="blog")
      */
-    public function index(BlogRepository $blogRepo): Response
+    public function index(BlogRepository $blogRepo, PaginatorInterface $paginator, Request $request): Response
     {
 
-        $blog = $blogRepo->findAll();
+        $blogPosts = $blogRepo->findAll();
+        $blogPerPage = $paginator->paginate(
+            $blogPosts,
+            $request->query->getInt('page', 1),
+            4
+        );
 
         return $this->render('blog/index.html.twig', [
-            'blog' => $blog,
+            'blogPosts' => $blogPerPage,
         ]);
     }
 
@@ -53,6 +58,17 @@ class BlogController extends AbstractController
 
         return $this->render('blog/addPost.html.twig', [
             'formBlog' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/blog/{id}", name="post_details")
+     */
+    public function postDetails(Blog $blog): Response
+    {
+
+        return $this->render('blog/postDetails.html.twig', [
+            'post' => $blog
         ]);
     }
 }

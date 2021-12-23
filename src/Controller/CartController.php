@@ -9,14 +9,21 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Entity\Books;
 use App\Repository\BooksRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends AbstractController
 {
     /**
      * @Route("/cart", name="cart")
      */
-    public function index(SessionInterface $session, BooksRepository $booksRepo): Response
+    public function index(SessionInterface $session, BooksRepository $booksRepo, Request $request): Response
     {
+
+        $output = $request->request->get('output');
+        if ($output !== null) {
+            return $this->redirectToRoute('bookList');
+        }
+
         $cart = $session->get('cart', []);
 
         $dataCart = [];

@@ -1,37 +1,47 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-  Hello BlogController!
+  Blog Post List
 {% endblock %}
 
 {% block body %}
-  <div class="row text-center mt-5 ml-auto mr-auto">
-    {% for post in blog %}
-      <div class="card mb-3" style="max-width: 800px;">
-        <div class="row g-0">
-          <div class="col-md-6">
-            <img src="/images/blog/{{ post.imageName }}"
-              class="img-fluid rounded-start"
-              alt="post_image" />
-          </div>
-          <div class="col-md-6">
-            <div class="card-body">
-              <h5 class="card-title">
-                {{ post.title }}
-              </h5>
-              <p class="card-text">
-                {{ (post.content|slice(0, 120)) ~ '...' }}
-              </p>
-              <p class="card-text">
-                {# <small class="text-muted">Last updated 3 mins ago</small> #}
-                <small class="text-muted">
-                  Posted in {{ post.createdAt|date('F d, Y') }}
-                </small>
-              </p>
+  <section class="py-5">
+    <div class="container">
+      <h1 class="fw-bolder fs-5 mb-4 ml-250">
+        Blog Post List
+      </h1>
+      {% for post in blogPosts %}
+        <a href="/blog/{{ post.id }}"
+          class="text-decoration-none card mb-3 ml-250 mr-250 m-w-800">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <img src="/images/blog/{{ post.imageName }}"
+                class="img-fluid rounded-start"
+                alt="post_image" />
+            </div>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title text-black">
+                  {{ post.title }}
+                </h5>
+                <p class="card-text text-dark">
+                  {{ (post.content|slice(0, 120)) ~ '...' }}
+                </p>
+                <p class="card-text">
+                  {# <small class="text-muted">Last updated 3 mins ago</small> #}
+                  <small class="text-muted">
+                    Posted in {{ post.createdAt|date('F d, Y') }}
+                  </small>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </a>
+      {% endfor %}
+      <div class="d-flex justify-content-center">
+        {% do blogPosts.setPageRange(2) %}
+        {{ knp_pagination_render(blogPosts, '/pagination.html.twig') }}
       </div>
-    {% endfor %}
-  </div>
+    </div>
+  </section>
 {% endblock %}

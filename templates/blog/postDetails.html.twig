@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <section class="py-5">
+      <div class="container col-lg-8 px-5">
+        <div class="card border-0 shadow rounded-3 overflow-hidden">
+          <div class="card-body p-0">
+            <div class="bg-featured-blog"
+              style="min-height:20rem;background-image: url(/images/blog/{{
+              post.imageName
+              }})"></div>
+            <div class="py-lg-2">
+              <div class="p-4 p-md-5">
+                <div class="badge bg-primary bg-gradient rounded-pill mb-2">
+                  News
+                </div>
+                <div style="float:right" class="text-muted">
+                  {{ post.createdAt|date('d/m/Y') }}
+                </div>
+                <div class="h2 fw-bolder">
+                  {{ post.title }}
+                </div>
+                <div class="h6 fw-bolder py-lg-2">
+                  by {{ post.user.username }}
+                </div>
+                <p>
+                  {{ post.content }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
