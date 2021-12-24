@@ -207,13 +207,15 @@
                     ${{ (total + 2.99)|number_format(2) }}
                   </h6>
                 </div>
-                <div id="btn-checkout"
-                  class="btn-block btn-blue d-flex justify-content-between px-4">
-                  <span class="text-left">Checkout</span>
-                  <span class="text-right">
-                    $<span id="checkout">{{ (total + 2.99)|number_format(2) }}</span>
-                  </span>
-                </div>
+                <a href="{{ path(app.user ? 'cart_purchase' : 'login') }}"
+                  class="stretched-link text-decoration-none">
+                  <div class="btn-block btn-blue d-flex justify-content-between px-4">
+                    <span class="text-left">Checkout</span>
+                    <span class="text-right">
+                      $<span id="checkout">{{ (total + 2.99)|number_format(2) }}</span>
+                    </span>
+                  </div>
+                </a>
               </div>
             </div>
           </div>

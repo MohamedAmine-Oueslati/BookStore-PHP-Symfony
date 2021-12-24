@@ -4,26 +4,22 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Entity\Books;
+use App\Entity\PurchaseHistory;
+use App\Entity\BookPurchased;
 use App\Repository\BooksRepository;
-use Symfony\Component\HttpFoundation\Request;
 
 class CartController extends AbstractController
 {
     /**
      * @Route("/cart", name="cart")
      */
-    public function index(SessionInterface $session, BooksRepository $booksRepo, Request $request): Response
+    public function index(SessionInterface $session, BooksRepository $booksRepo): Response
     {
-
-        $output = $request->request->get('output');
-        if ($output !== null) {
-            return $this->redirectToRoute('bookList');
-        }
-
         $cart = $session->get('cart', []);
 
         $dataCart = [];
@@ -96,5 +92,42 @@ class CartController extends AbstractController
         $session->set('cart', $cart);
 
         return $this->redirectToRoute('cart');
+    }
+
+    /**
+     * @Route("cart/purchase", name="cart_purchase")
+     */
+    public function makePurchase(SessionInterface $session, BooksRepository $booksRepo): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $cart = $session->get('cart', []);
+        $purchaseHistory = new PurchaseHistory();
+        $total = 0;
+
+        foreach ($cart as $id => $quantity) {
+            $book = $booksRepo->find($id);
+
+            $bookPurchased = new BookPurchased();
+            $bookPurchased->setBook($book)
+                ->setQuantity($quantity);
+
+            $entityManager->persist($bookPurchased);
+
+            $purchaseHistory->addBook($bookPurchased);
+
+            $total += $book->getPrice() * $quantity;
+        }
+
+        $purchaseHistory->setTotal($total)
+            ->setUser($this->getUser())
+            ->setOrderPlaced(new \DateTime());
+
+        $entityManager->persist($purchaseHistory);
+        $entityManager->flush();
+
+        $session->remove('cart');
+
+        return $this->redirectToRoute('bookList');
     }
 }

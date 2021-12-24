@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Purchase History
+{% endblock %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('cart') }}
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+    $('#myCollapsible').collapse({ toggle: true })
+  </script>
+{% endblock %}
+
+{% block body %}
+  <div id="accordion">
+    {% for purchase in purchaseHistory %}
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-just"
+              data-toggle="collapse"
+              data-target="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne">
+              <div class="text-dark text-start stretched-link"
+                style="width: 800px">
+                <div class="d-flex justify-content-center">
+                  <div class="col-6">
+                    <h6 class="heading">
+                      Order Placed
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6 class="heading">
+                      Total
+                    </h6>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div class="col-6">
+                    <h6 class="heading">
+                      {{ purchase.orderPlaced|date('F d, Y') }}
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6 class="heading">
+                      {{ purchase.total|number_format(2) }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne"
+          class="collapse show"
+          aria-labelledby="headingOne"
+          data-parent="#accordion">
+          <div class="card-body">
+            {% for item in purchase.books %}
+              <div class="row d-flex justify-content-center border-top">
+                <div class="col-5">
+                  <div class="d-flex">
+                    <div class="book">
+                      <img src="/images/books/{{ item.book.imageName }}"
+                        class="book-img" />
+                    </div>
+                    <div class="my-auto flex-column d-flex pad-left">
+                      <h6 class="mob-text">
+                        {{ item.book.title }}
+                      </h6>
+                      <p class="mob-text">
+                        {{ item.book.author }}
+                      </p>
+                      <p class="mob-text">
+                         {{ item.quantity }} X $<span>{{ item.book.price|number_format(2) }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

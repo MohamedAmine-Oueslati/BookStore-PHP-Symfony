@@ -69,10 +69,16 @@ class User implements UserInterface
      */
     private $blogs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PurchaseHistory::class, mappedBy="user")
+     */
+    private $purchaseHistory;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->blogs = new ArrayCollection();
+        $this->purchaseHistory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +235,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($blog->getUser() === $this) {
                 $blog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PurchaseHistory[]
+     */
+    public function getPurchaseHistory(): Collection
+    {
+        return $this->purchaseHistory;
+    }
+
+    public function addPurchaseHistory(PurchaseHistory $purchaseHistory): self
+    {
+        if (!$this->purchaseHistory->contains($purchaseHistory)) {
+            $this->purchaseHistory[] = $purchaseHistory;
+            $purchaseHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchaseHistory(PurchaseHistory $purchaseHistory): self
+    {
+        if ($this->purchaseHistory->removeElement($purchaseHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($purchaseHistory->getUser() === $this) {
+                $purchaseHistory->setUser(null);
             }
         }
 
