@@ -4,39 +4,52 @@
   Blog Post List
 {% endblock %}
 
+{% block stylesheets %}
+  {{ parent() }}
+  {{ encore_entry_link_tags('blog') }}
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('blog') }}
+{% endblock %}
+
 {% block body %}
-  <section class="py-5">
-    <div class="container">
-      <h1 class="fw-bolder fs-5 mb-4 ml-250">
+  <section class="light">
+    <div class="container py-2">
+      <div class="h1 text-center text-dark" id="pageHeaderTitle">
         Blog Post List
-      </h1>
-      {% for post in blogPosts %}
-        <a href="/blog/{{ post.id }}"
-          class="text-decoration-none card mb-3 ml-250 mr-250 m-w-800">
-          <div class="row g-0">
-            <div class="col-md-6">
-              <img src="/images/blog/{{ post.imageName }}"
-                class="img-fluid rounded-start"
-                alt="post_image" />
+      </div>
+      {% set card_color = ['blue', 'red', 'green', 'yellow'] %}
+      {% for idx, post in blogPosts %}
+        <article class="postcard light {{ card_color[idx] }}">
+          <a class="postcard__img_link" href="/blog/{{ post.id }}">
+            <img class="postcard__img"
+              src="/images/blog/{{ post.imageName }}"
+              alt="Image Title" />
+          </a>
+          <div class="postcard__text t-dark">
+            <h1 class="postcard__title {{ card_color[idx] }}">
+              <a href="/blog/{{ post.id }}">{{ post.title }}</a>
+            </h1>
+            <div class="postcard__subtitle small">
+              <time datetime="2020-05-25 12:00:00">
+                <i class="bi bi-calendar2-week-fill mr-2"></i>
+                Posted in {{ post.createdAt|date('F d, Y') }}
+              </time>
             </div>
-            <div class="col-md-6">
-              <div class="card-body">
-                <h5 class="card-title text-black">
-                  {{ post.title }}
-                </h5>
-                <p class="card-text text-dark">
-                  {{ (post.content|slice(0, 120)) ~ '...' }}
-                </p>
-                <p class="card-text">
-                  {# <small class="text-muted">Last updated 3 mins ago</small> #}
-                  <small class="text-muted">
-                    Posted in {{ post.createdAt|date('F d, Y') }}
-                  </small>
-                </p>
-              </div>
+            <div class="postcard__bar"></div>
+            <div class="postcard__preview-txt">
+              {{ (post.content|slice(0, 350)) ~ '...' }}
             </div>
+            <ul class="postcard__tagbox">
+              <li class="tag__item"><i class="bi bi-tag-fill mr-2"></i>News</li>
+              <li class="tag__item play {{ card_color[idx] }}">
+                <a href="#"><i class="bi bi-tag-fill mr-2"></i>Blog Post</a>
+              </li>
+            </ul>
           </div>
-        </a>
+        </article>
       {% endfor %}
       <div class="d-flex justify-content-center">
         {% do blogPosts.setPageRange(2) %}

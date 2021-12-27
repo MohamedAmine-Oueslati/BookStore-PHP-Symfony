@@ -51,13 +51,15 @@ class CartController extends AbstractController
 
         if (!empty($cart[$id])) {
             $cart[$id]++;
+            $session->set('cart', $cart);
+
+            return $this->redirectToRoute('cart');
         } else {
             $cart[$id] = 1;
+            $session->set('cart', $cart);
+
+            return $this->redirectToRoute('bookList');
         }
-
-        $session->set('cart', $cart);
-
-        return $this->redirectToRoute('cart');
     }
 
     /**

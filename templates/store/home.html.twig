@@ -26,7 +26,7 @@
         </div>
         <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center">
           <img class="img-fluid rounded-3 my-5"
-            src="{{ asset('images/book.jpg') }}"
+            src="{{ asset('images/store/book.jpg') }}"
             alt="books" />
         </div>
       </div>
@@ -34,69 +34,78 @@
   </header>
   <!-- Features section -->
   <section class="py-5" id="features">
-    <div class="container px-5 my-5">
-      <div class="row gx-5">
-        <div class="col-lg-4 mb-5 mb-lg-0">
-          <h2 class="fw-bolder mb-0">
-            A better way to start:
-          </h2>
+    <div class="container h-50">
+      <div class="row align-middle">
+        <div class="col-md-6 col-lg-3 column">
+          <div class="card card-start gr-1">
+            <div class="txt">
+              <h1>
+                PURCHASE BOOKS
+              </h1>
+              <p>
+                Navigate to "BookList" search for your favorite books add them
+                to your card and make your purchase , then you'll either have
+                them delivered to you or pick them up from the store yourself.
+              </p>
+            </div>
+            <a href="/BookList">more</a>
+            <div class="ico-card">
+              <i class="fa fa-rebel"></i>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-8">
-          <div class="row gx-5 row-cols-1 row-cols-md-2">
-            <div class="col mb-5 h-100">
-              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                <i class="bi bi-bag"></i>
-              </div>
-              <h2 class="h5">
-                Puchase Books
-              </h2>
-              <p class="mb-0">
-                Navigate to the BookList screen search for your favorite books
-                add them to your card enter your Credit Card details and make
-                your purchase , then you'll either have them delivered to you or
-                pick them up from the store yourself.
-              </p>
-            </div>
-            <div class="col mb-5 h-100">
-              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                <i class="bi bi-wallet2"></i>
-              </div>
-              <h2 class="h5">
-                Sell Books
-              </h2>
-              <p class="mb-0">
+        <div class="col-md-6 col-lg-3 column">
+          <div class="card card-start gr-2">
+            <div class="txt">
+              <h1>
+                SELL BOOKS
+              </h1>
+              <p>
                 Whether you’re a writer who wants to sell their own books or you
-                want to sell other people's works, create an account then
-                navigate to the AddBook screen , add your book and it will be
-                available for sell.
+                want to sell other people's works. Navigate to "AddBook", enter
+                your book description and it will be available for sell.
               </p>
             </div>
-            <div class="col mb-5 mb-md-0 h-100">
-              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                <i class="bi bi-book"></i>
-              </div>
-              <h2 class="h5">
-                Discuss Books
-              </h2>
-              <p class="mb-0">
+            <a href="/AddBook">more</a>
+            <div class="ico-card">
+              <i class="fa fa-rebel"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 column">
+          <div class="card card-start gr-3">
+            <div class="txt">
+              <h1>
+                DISCUSS BOOKS
+              </h1>
+              <p>
                 Just because you are stuck at home alone does not mean you can't
-                discuss and debate books. navigate to your favorite book detail
-                screen and discuss it with other readers
+                discuss and debate books. navigate to your favorite book details
+                screen and discuss it with other readers.
               </p>
             </div>
-            <div class="col h-100">
-              <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
-                <i class="bi bi-file-post-fill"></i>
-              </div>
-              <h2 class="h5">
-                Create Blog Posts
-              </h2>
-              <p class="mb-0">
+            <a href="/BookList">more</a>
+            <div class="ico-card">
+              <i class="fa fa-codepen"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 column">
+          <div class="card card-start gr-4">
+            <div class="txt">
+              <h1>
+                CREATE BLOG POSTS
+              </h1>
+              <p>
                 If you haven't already created a Blog Post connect to your
-                account, navigate to the blog screen then start the process by
-                adding a title and then proceed to add content and all other
-                details related to the Post.
+                account, navigate to "blog" then start the process by adding a
+                title and proceed to add content and all other details related
+                to the Post.
               </p>
+            </div>
+            <a href="/blog">more</a>
+            <div class="ico-card">
+              <i class="fa fa-empire"></i>
             </div>
           </div>
         </div>
@@ -132,17 +141,17 @@
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="{{ asset('images/slide1.jpg') }}"
+          <img src="{{ asset('images/store/slide1.jpg') }}"
             class="d-block w-100"
             alt="..." />
         </div>
         <div class="carousel-item">
-          <img src="{{ asset('images/slide2.jpg') }}"
+          <img src="{{ asset('images/store/slide2.jpg') }}"
             class="d-block w-100"
             alt="..." />
         </div>
         <div class="carousel-item">
-          <img src="{{ asset('images/slide3.jpg') }}"
+          <img src="{{ asset('images/store/slide3.jpg') }}"
             class="d-block w-100"
             alt="..." />
         </div>
@@ -230,7 +239,7 @@
                           and post.user.profile.userAvatar.avatarName
                           ? '/images/userAvatar/'
                             ~ post.user.profile.userAvatar.avatarName
-                          : '/images/avatar.jpg'
+                          : '/images/store/avatar.jpg'
                         }}"
                         style="width: 50px; height: 50px; object-fit: cover;"
                         alt="user avatar" />

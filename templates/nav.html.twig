@@ -37,7 +37,7 @@
         {# <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li> #}
         <li class="nav-item d-flex align-items-center">
           <a class="nav-link" href="/cart"><i class="bi-cart3"></i> Cart</a>
-          <span class="badge bg-danger">
+          <span class="badge" style="background-color:rgba(220, 53, 69)">
             {{ app.session.get('cart')|length }}
           </span>
         </li>
