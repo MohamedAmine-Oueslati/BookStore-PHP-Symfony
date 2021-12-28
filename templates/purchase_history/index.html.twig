@@ -9,78 +9,89 @@
   {{ encore_entry_link_tags('cart') }}
 {% endblock %}
 
-{% block javascripts %}
-  <script>
-    $('#myCollapsible').collapse({ toggle: true })
-  </script>
-{% endblock %}
-
 {% block body %}
-  <div id="accordion">
-    {% for purchase in purchaseHistory %}
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-just"
-              data-toggle="collapse"
-              data-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne">
-              <div class="text-dark text-start stretched-link"
-                style="width: 800px">
-                <div class="d-flex justify-content-center">
-                  <div class="col-6">
-                    <h6 class="heading">
-                      Order Placed
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6 class="heading">
-                      Total
-                    </h6>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="col-6">
-                    <h6 class="heading">
-                      {{ purchase.orderPlaced|date('F d, Y') }}
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6 class="heading">
-                      {{ purchase.total|number_format(2) }}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-            </button>
-          </h5>
-        </div>
-
-        <div id="collapseOne"
-          class="collapse show"
-          aria-labelledby="headingOne"
-          data-parent="#accordion">
-          <div class="card-body">
-            {% for item in purchase.books %}
-              <div class="row d-flex justify-content-center border-top">
-                <div class="col-5">
-                  <div class="d-flex">
-                    <div class="book">
-                      <img src="/images/books/{{ item.book.imageName }}"
-                        class="book-img" />
+  <section class="py-5">
+    <div class="container px-5 my-5">
+      {# <div class="text-center mb-5">
+        <h1 class="fw-bolder">
+          Purchase History
+        </h1>
+        <p class="lead fw-normal text-muted mb-0">
+          How can we help you?
+        </p>
+      </div> #}
+      <div class="row gx-5">
+        <div class="col-xl-12">
+          <h2 class="fw-bolder mb-3">
+            Purchase History
+          </h2>
+          <div class="accordion mb-5" id="accordionExample">
+            {% for idx, purchase in purchaseHistory %}
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="heading{{ idx }}">
+                  <button class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapse{{ idx }}"
+                    aria-expanded="true"
+                    aria-controls="collapse{{ idx }}">
+                    <div class="text-dark text-start stretched-link offset-xl-1"
+                      style="width: 800px;">
+                      <div class="d-flex justify-content-center">
+                        <div class="col-6">
+                          <h6 class="heading">
+                            Order Placed
+                          </h6>
+                        </div>
+                        <div class="col-6">
+                          <h6 class="heading">
+                            Total
+                          </h6>
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-center">
+                        <div class="col-6">
+                          <h6 class="heading">
+                            {{ purchase.orderPlaced|date('F d, Y') }}
+                          </h6>
+                        </div>
+                        <div class="col-6">
+                          <h6 class="heading">
+                            ${{ purchase.total|number_format(2) }}
+                          </h6>
+                        </div>
+                      </div>
                     </div>
-                    <div class="my-auto flex-column d-flex pad-left">
-                      <h6 class="mob-text">
-                        {{ item.book.title }}
-                      </h6>
-                      <p class="mob-text">
-                        {{ item.book.author }}
-                      </p>
-                      <p class="mob-text">
-                         {{ item.quantity }} X $<span>{{ item.book.price|number_format(2) }}
-                      </p>
-                    </div>
+                  </button>
+                </h3>
+                <div class="accordion-collapse collapse"
+                  id="collapse{{ idx }}"
+                  aria-labelledby="heading{{ idx }}"
+                  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">     
+                    {% for item in purchase.books %}
+                      <div class="row d-flex justify-content-start">
+                        <div class="col-5">
+                          <div class="d-flex">
+                            <div class="book">
+                              <img src="/images/books/{{ item.book.imageName }}"
+                                class="book-img" />
+                            </div>
+                            <div class="my-auto flex-column d-flex pad-left col-auto">
+                              <h6 class="mob-text">
+                                {{ item.book.title }}
+                              </h6>
+                              <p class="mob-text">
+                                {{ item.book.author }}
+                              </p>
+                              <h6 class="mob-text">
+                                 {{ item.quantity }} X $<span>{{ item.book.price|number_format(2) }}
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
                   </div>
                 </div>
               </div>
@@ -88,6 +99,6 @@
           </div>
         </div>
       </div>
-    {% endfor %}
-  </div>
+    </div>
+  </section>
 {% endblock %}
