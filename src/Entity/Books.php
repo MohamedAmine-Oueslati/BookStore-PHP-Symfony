@@ -79,9 +79,15 @@ class Books
      */
     private $price;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=BookGenre::class, mappedBy="genre")
+     */
+    private $genres;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->genres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,6 +255,33 @@ class Books
     public function setImageName(?string $imageName): Books
     {
         $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BookGenre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(BookGenre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+            $genre->addGenre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(BookGenre $genre): self
+    {
+        if ($this->genres->removeElement($genre)) {
+            $genre->removeGenre($this);
+        }
 
         return $this;
     }
