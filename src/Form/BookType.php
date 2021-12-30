@@ -9,7 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BookType extends AbstractType
@@ -19,8 +20,9 @@ class BookType extends AbstractType
         $builder
             ->add('title', TextType::class, ["attr" => ["placeholder" => "Title"]])
             ->add('author', TextType::class, ["attr" => ["placeholder" => "Author"]])
-            ->add('imageFile', FileType::class, ["required" => true])
+            ->add('imageFile', VichFileType::class, ["required" => true])
             ->add('genre', TextType::class, ["attr" => ["placeholder" => "Genre"]])
+            ->add('genres', ChoiceType::class, ["required" => true])
             ->add('numberOfPages', NumberType::class, ["attr" => ["placeholder" => "Number Of Pages"]])
             ->add('price', NumberType::class, ["attr" => ["placeholder" => "Price"]])
             ->add('description', TextareaType::class, ["attr" => ["placeholder" => "Description", 'rows' => '3']])

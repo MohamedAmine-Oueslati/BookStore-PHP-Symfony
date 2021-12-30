@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class BlogType extends AbstractType
@@ -15,7 +15,7 @@ class BlogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('imageFile', FileType::class, ["required" => true])
+            ->add('imageFile', VichFileType::class, ["required" => true])
             ->add('title', TextType::class, ["attr" => ["placeholder" => "Title"]])
             ->add('content', TextareaType::class, ["attr" => ["placeholder" => "Content", 'rows' => '8']])
             ->add('submit', SubmitType::class, ['label' => 'Create Post']);;

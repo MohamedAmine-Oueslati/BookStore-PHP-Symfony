@@ -48,6 +48,14 @@
                 {{ form_errors(formBook.genre) }}
               </div>
             </div>
+            <!-- Genre input -->
+            <div class="form-floating mb-3">
+              {{ form_widget(formBook.genres) }}
+              <label for="genre">Genre</label>
+              <div class="form-error">
+                {{ form_errors(formBook.genres) }}
+              </div>
+            </div>
             <!-- Number Of Pages input -->
             <div class="form-floating mb-3">
               {{ form_widget(formBook.numberOfPages) }}

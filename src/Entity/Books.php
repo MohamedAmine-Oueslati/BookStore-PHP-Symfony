@@ -80,7 +80,7 @@ class Books
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=BookGenre::class, mappedBy="genre")
+     * @ORM\ManyToMany(targetEntity=BookGenre::class, mappedBy="book")
      */
     private $genres;
 

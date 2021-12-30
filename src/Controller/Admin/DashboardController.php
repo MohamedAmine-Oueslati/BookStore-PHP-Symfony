@@ -8,6 +8,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\Blog;
+use App\Entity\BookGenre;
+use App\Entity\Books;
+use App\Entity\User;
+
 class DashboardController extends AbstractDashboardController
 {
     /**
@@ -26,7 +31,19 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        return [
+            MenuItem::linkToDashboard('Dashboard', 'fa fa-home'),
+            // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+            MenuItem::linkToCrud('Blog', 'fa fa-file-text', Blog::class),
+
+            MenuItem::section('Users'),
+            MenuItem::linkToCrud('Users', 'fa fa-user', User::class),
+
+
+            MenuItem::section('Book'),
+            MenuItem::linkToCrud('Book Genre', 'fa fa-tags', BookGenre::class),
+            MenuItem::linkToCrud('Book', 'fa fa-book', Books::class)
+
+        ];
     }
 }
