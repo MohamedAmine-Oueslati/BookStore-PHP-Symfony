@@ -12,9 +12,11 @@
             <div class="row gx-0">
               <div class="col-lg-6 col-xl-5 py-lg-5">
                 <div class="p-4 p-md-5">
-                  <div class="badge bg-primary bg-gradient rounded-pill mb-2">
-                    {{ book.genre }}
-                  </div>
+                  {% for genre in book.genre %}
+                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">
+                      {{ genre }}
+                    </div>
+                  {% endfor %}
                   <div style="float:right" class="text-muted">
                     {{ book.datePublished|date('d/m/Y') }}
                   </div>

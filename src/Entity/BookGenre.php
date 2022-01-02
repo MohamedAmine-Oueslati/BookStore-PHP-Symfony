@@ -24,11 +24,6 @@ class BookGenre
      */
     private $genre;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Books::class, inversedBy="genres")
-     */
-    private $book;
-
     public function __construct()
     {
         $this->book = new ArrayCollection();
@@ -51,31 +46,7 @@ class BookGenre
         return $this;
     }
 
-    /**
-     * @return Collection|Books[]
-     */
-    public function getBook(): Collection
-    {
-        return $this->book;
-    }
-
-    public function addBook(Books $book): self
-    {
-        if (!$this->book->contains($book)) {
-            $this->book[] = $book;
-        }
-
-        return $this;
-    }
-
-    public function removeBook(Books $book): self
-    {
-        $this->book->removeElement($book);
-
-        return $this;
-    }
-
-    public function __toString(): string
+    public function __toString(): ?string
     {
         return $this->genre;
     }

@@ -45,11 +45,6 @@ class Books
     private $imageName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $genre;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $description;
@@ -80,14 +75,14 @@ class Books
     private $price;
 
     /**
-     * @ORM\ManyToMany(targetEntity=BookGenre::class, mappedBy="book")
+     * @ORM\ManyToMany(targetEntity=BookGenre::class)
      */
-    private $genres;
+    private $genre;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->genres = new ArrayCollection();
+        $this->genre = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,18 +110,6 @@ class Books
     public function setAuthor(string $author): self
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    public function getGenre(): ?string
-    {
-        return $this->genre;
-    }
-
-    public function setGenre(string $genre): self
-    {
-        $this->genre = $genre;
 
         return $this;
     }
@@ -262,16 +245,15 @@ class Books
     /**
      * @return Collection|BookGenre[]
      */
-    public function getGenres(): Collection
+    public function getGenre(): Collection
     {
-        return $this->genres;
+        return $this->genre;
     }
 
     public function addGenre(BookGenre $genre): self
     {
-        if (!$this->genres->contains($genre)) {
-            $this->genres[] = $genre;
-            $genre->addGenre($this);
+        if (!$this->genre->contains($genre)) {
+            $this->genre[] = $genre;
         }
 
         return $this;
@@ -279,9 +261,7 @@ class Books
 
     public function removeGenre(BookGenre $genre): self
     {
-        if ($this->genres->removeElement($genre)) {
-            $genre->removeGenre($this);
-        }
+        $this->genre->removeElement($genre);
 
         return $this;
     }
