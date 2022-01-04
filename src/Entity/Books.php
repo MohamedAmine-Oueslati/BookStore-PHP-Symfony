@@ -79,10 +79,16 @@ class Books
      */
     private $genre;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ratings::class, mappedBy="book")
+     */
+    private $ratings;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->genre = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +268,36 @@ class Books
     public function removeGenre(BookGenre $genre): self
     {
         $this->genre->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ratings[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Ratings $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Ratings $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getBook() === $this) {
+                $rating->setBook(null);
+            }
+        }
 
         return $this;
     }

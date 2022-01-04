@@ -101,4 +101,16 @@ class BookController extends AbstractController
             'formBook' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/rateBook", name="rate_book", methods={"POST"})
+     */
+    public function rateBook(request $request): Response
+    {
+
+        $data = $request->request->get('data');
+        dd($data);
+
+        return $this->redirectToRoute('bookList');
+    }
 }

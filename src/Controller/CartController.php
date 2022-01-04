@@ -44,7 +44,7 @@ class CartController extends AbstractController
     /**
      * @Route("/cart/increase/{id}", name="cart_increase_quantity")
      */
-    public function increaseBookQuantity(SessionInterface $session, Books $book): Response
+    public function increaseBookQuantity(SessionInterface $session, Books $book, Request $request): Response
     {
         $cart = $session->get('cart', []);
         $id = $book->getId();
@@ -58,7 +58,10 @@ class CartController extends AbstractController
             $cart[$id] = 1;
             $session->set('cart', $cart);
 
-            return $this->redirectToRoute('bookList');
+            $referer = $request->headers->get('referer');
+            $host = $request->headers->get('host');
+            $lastPath = substr($referer, strpos($referer, $host) + strlen($host));
+            return $this->redirect($lastPath);
         }
     }
 

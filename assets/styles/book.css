@@ -164,3 +164,62 @@
 @media screen and (max-width:1200px){
     .product-grid{ margin: 0 0 30px; }
 }
+
+
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+.myratings {
+    font-size: 25px;
+    color: #0d6efd;
+}
+
+.rating>[id^="star"] {
+    display: none
+}
+
+.rating>label:before {
+    margin: 3px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005"
+}
+
+.rating>.half:before {
+    content: "\f089";
+    position: absolute
+}
+
+.rating>label {
+    color: #ddd;
+    float: right
+}
+
+.rating>[id^="star"]:checked~label,
+.rating:not(:checked)>label:hover,
+.rating:not(:checked)>label:hover~label {
+    color: #0d6efd
+}
+
+.rating>[id^="star"]:checked+label:hover,
+.rating>[id^="star"]:checked~label:hover,
+.rating>label:hover~[id^="star"]:checked~label,
+.rating>[id^="star"]:checked~label:hover~label {
+    color: #6aa5ff
+}
+
+.reset-option {
+    display: none
+}
+
+.reset-button {
+    margin: 6px 12px;
+    background-color: rgb(255, 255, 255);
+    text-transform: uppercase
+}
+
+.rating-card {
+    width:100%;
+}
+
