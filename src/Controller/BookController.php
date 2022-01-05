@@ -37,6 +37,15 @@ class BookController extends AbstractController
             return $this->redirectToRoute('details', ['id' => $book->getId()]);
         }
 
+        $ratings = $book->getRatings();
+        $rating = 0;
+        if (count($ratings) > 0) {
+            foreach ($ratings as $rate) {
+                $rating += $rate->getValue();
+            }
+            $rating = $rating / count($ratings);
+        }
+
         $commentPerPage = $paginator->paginate(
             $book->getComments(),
             $request->query->getInt('page', 1),
@@ -44,6 +53,7 @@ class BookController extends AbstractController
         );
 
         return $this->render('book/details.html.twig', [
+            'rating' => $rating,
             'book' => $book,
             'comments' => $commentPerPage,
             'formComment' => $form->createView(),

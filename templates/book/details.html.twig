@@ -20,7 +20,7 @@
         <div class="card border-0 shadow rounded-3 overflow-hidden">
           <div class="card-body p-0">
             <div class="row gx-0">
-              <div class="col-lg-6 col-xl-5 py-lg-5">
+              <div class="col-lg-6 col-xl-7 py-lg-5">
                 <div class="p-4 p-md-5">
                   {% for genre in book.genre %}
                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">
@@ -30,32 +30,33 @@
                   <div style="float:right" class="text-muted">
                     {{ book.datePublished|date('d/m/Y') }}
                   </div>
-
-                  <div class="h2 fw-bolder">
-                    {{ book.title }}
+                  <div>
+                    <div class="h2 fw-bolder d-inline-block">
+                      {{ book.title }}
+                    </div>
+                    {% if rating > 0 %}
+                      <div class="d-flex justify-content-center align-items-center mt-1"
+                        style="float: right">
+                        <fieldset class="web-rating">
+                          <input type="radio"
+                            id="star5"
+                            checked /><label for="star5" />
+                        </fieldset>
+                        <h6 class="">
+                          <span class="web-ratings">{{ rating }}</span>
+                          /5
+                        </h6>
+                      </div>
+                    {% endif %}
                   </div>
-                  <div class="h6 fw-bolder">
+                  <div class="h6 fw-bolder mb-3">
                     by {{ book.author }}
                   </div>
-                  <p>
+                  <div class="overflow-auto m-h-200">
                     {{ book.description|raw }}
-                  </p>
-                  <a class="text-decoration-none" href="#!">
-                    Read more
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                  <div class="mt-5 d-flex align-items-center">
-                    {{
-                      include(
-                        'book/rating.html.twig',
-                        {
-                          book: book
-                        }
-                      )
-                    }}
-
-                    <a style="width:250px"
-                      class="add-to-cart text-decoration-none btn {{
+                  </div>
+                  <div class="mt-4">
+                    <a class="mt-4 add-to-cart text-decoration-none w-200 btn {{
                       app.session.get('cart')[book.id] is defined
                         ? 'btn-outline-primary'
                         : 'btn-primary'
@@ -74,10 +75,21 @@
                         ? 'In Cart'
                         : 'Add to Cart' }}
                     </a>
+
+                    {% if app.user %}
+                      {{
+                        include(
+                          'book/rating.html.twig',
+                          {
+                            book: book
+                          }
+                        )
+                      }}
+                    {% endif %}
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 col-xl-7">
+              <div class="col-lg-6 col-xl-5">
                 <div class="bg-featured-blog"
                   style="background-image: url(/images/books/{{
                   book.imageName

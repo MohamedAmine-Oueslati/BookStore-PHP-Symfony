@@ -5,11 +5,9 @@
       {% set rate = rating.value %}
     {% endif %}
   {% endfor %}
-  <div class="d-flex rating-card">
+  <div class="d-flex" style="float: right">
     <div class="text-center">
-      <h6 class="mt-1">
-        Your rating :
-      </h6>
+      <h6>Your rating :</h6>
       <h6 class="mt-1">
         <span class="myratings">{{ rate }}</span>
         /5
@@ -18,76 +16,121 @@
       <fieldset class="rating">
         <input type="radio"
           id="star5"
+          class="radio"
           name="rating"
-          value="5" /><label class="full" for="star5" title="Awesome - 5 stars">
+          value="5"
+          {% if rate == 5 %}
+            checked
+          {% endif %}
+           /><label class="full"
+          for="star5"
+          title="Awesome - 5 stars">
 
         </label>
         <input type="radio"
           id="star4half"
+          class="radio"
           name="rating"
-          value="4.5" /><label class="half"
+          value="4.5"
+          {% if rate == 4.5 %}
+            checked
+          {% endif %} /><label class="half"
           for="star4half"
           title="Pretty good - 4.5 stars">
 
         </label>
         <input type="radio"
           id="star4"
+          class="radio"
           name="rating"
-          value="4" /><label class="full"
+          value="4"
+          {% if rate == 4 %}
+            checked
+          {% endif %} /><label class="full"
           for="star4"
           title="Pretty good - 4 stars">
 
         </label>
         <input type="radio"
           id="star3half"
+          class="radio"
           name="rating"
-          value="3.5" /><label class="half"
+          value="3.5"
+          {% if rate == 3.5 %}
+            checked
+          {% endif %} /><label class="half"
           for="star3half"
           title="Meh - 3.5 stars">
 
         </label>
         <input type="radio"
           id="star3"
+          class="radio"
           name="rating"
-          value="3" /><label class="full" for="star3" title="Meh - 3 stars">
+          value="3"
+          {% if rate == 3 %}
+            checked
+          {% endif %} /><label class="full"
+          for="star3"
+          title="Meh - 3 stars">
 
         </label>
         <input type="radio"
           id="star2half"
+          class="radio"
           name="rating"
-          value="2.5" /><label class="half"
+          value="2.5"
+          {% if rate == 2.5 %}
+            checked
+          {% endif %} /><label class="half"
           for="star2half"
           title="Kinda bad - 2.5 stars">
 
         </label>
         <input type="radio"
           id="star2"
+          class="radio"
           name="rating"
-          value="2" /><label class="full"
+          value="2"
+          {% if rate == 2 %}
+            checked
+          {% endif %} /><label class="full"
           for="star2"
           title="Kinda bad - 2 stars">
 
         </label>
         <input type="radio"
           id="star1half"
+          class="radio"
           name="rating"
-          value="1.5" /><label class="half"
+          value="1.5"
+          {% if rate == 1.5 %}
+            checked
+          {% endif %} /><label class="half"
           for="star1half"
           title="Meh - 1.5 stars">
 
         </label>
         <input type="radio"
           id="star1"
+          class="radio"
           name="rating"
-          value="1" /><label class="full"
+          value="1"
+          {% if rate == 1 %}
+            checked
+          {% endif %} /><label class="full"
           for="star1"
           title="Sucks big time - 1 star">
 
         </label>
         <input type="radio"
           id="starhalf"
+          class="radio"
           name="rating"
-          value="0.5" /><label class="half"
+          value="0.5"
+          {% if rate == 0.5 %}
+            checked
+          {% endif %} /><label class="half"
           for="starhalf"
           title="Sucks big time - 0.5 stars">
 

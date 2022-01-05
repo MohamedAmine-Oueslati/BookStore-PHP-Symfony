@@ -4,8 +4,8 @@ const $ = require("jquery");
 global.$ = global.jQuery = $;
 
 $(document).ready(function () {
-  $("input[type='radio']").click(function () {
-    var rating = $("input[type='radio']:checked").val();
+  $(".radio").click(function () {
+    var rating = $(".radio:checked").val();
     $(".myratings").text(rating);
 
     var url = "https://localhost:8000/rateBook";

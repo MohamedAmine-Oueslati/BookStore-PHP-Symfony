@@ -167,9 +167,13 @@
 
 
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
-@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
 
 .myratings {
+    font-size: 25px;
+    color: #0d6efd;
+}
+
+.web-ratings {
     font-size: 25px;
     color: #0d6efd;
 }
@@ -184,6 +188,19 @@
     font-family: FontAwesome;
     display: inline-block;
     content: "\f005"
+}
+
+.web-rating>[id^="star"] {
+    display: none
+}
+
+.web-rating>label:before {
+    margin: 3px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
+    color: #0d6efd;
 }
 
 .rating>.half:before {
@@ -219,7 +236,11 @@
     text-transform: uppercase
 }
 
-.rating-card {
-    width:100%;
+.w-200 {
+    width:200px;
+}
+
+.m-h-200 {
+    max-height: 200px;
 }
 

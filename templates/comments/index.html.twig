@@ -34,7 +34,7 @@
                 </a>
               </div>
               <div class="ms-3">
-                <div class="fw-bold">
+                <div class="fw-bold d-flex">
                   <a class="text-decoration-none link-dark"
                     href="{{
                     path(
@@ -46,13 +46,15 @@
                     }}">
                     {{ comment.author.username }}
                   </a>
-                  <small class="text-muted">
-                    ({{ comment.createdAt|date('d/m/Y H:i') }})
-                  </small>
+                  <div class="ms-1" style="width:100%;">
+                    <small class="text-muted">
+                      ({{ comment.createdAt|date('d/m/Y H:i') }})
+                    </small>
+                  </div>
                   <!-- Update or Delete Comment -->
                   {% if app.user and app.user.email == comment.author.email %}
-                    <div style="float:right">
-                      <span style="margin:10px">
+                    <div class="d-flex">
+                      <span style="margin:0 10px">
                         <a class="text-decoration-none link-dark"
                           href="{{
                           path(
