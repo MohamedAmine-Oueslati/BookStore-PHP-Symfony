@@ -16,6 +16,7 @@ use App\Form\CommentType;
 use App\Entity\Comments;
 use App\Form\SearchType;
 use App\Entity\Search;
+use App\Service\BookListAPI;
 
 class BookController extends AbstractController
 {
@@ -63,12 +64,16 @@ class BookController extends AbstractController
     /**
      * @Route("/BookList", name="bookList")
      */
-    public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request): Response
+    public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request, BookListAPI $bookListAPI): Response
     {
 
         $search = new Search();
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
+
+        if ($search->getTitle()) {
+            dd($bookListAPI->fetchBookList($search->getTitle()));
+        }
 
         $books = $repo->findAllQuery($search);
         $bookPerPage = $paginator->paginate(
