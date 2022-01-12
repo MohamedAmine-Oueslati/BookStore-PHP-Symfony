@@ -71,10 +71,6 @@ class BookController extends AbstractController
         $form = $this->createForm(SearchType::class, $search);
         $form->handleRequest($request);
 
-        if ($search->getTitle()) {
-            dd($bookListAPI->fetchBookList($search->getTitle()));
-        }
-
         $books = $repo->findAllQuery($search);
         $bookPerPage = $paginator->paginate(
             $books,
