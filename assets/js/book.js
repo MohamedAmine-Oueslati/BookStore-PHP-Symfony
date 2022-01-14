@@ -5,18 +5,23 @@ global.$ = global.jQuery = $;
 
 $(document).ready(function () {
   $(".radio").click(function () {
-    var rating = $(".radio:checked").val();
-    $(".myratings").text(rating);
+    var rating = Number($(".radio:checked").val());
 
-    var url = "https://localhost:8000/rateBook";
-    console.log(url);
+    var url = window.location.href;
+    var bookId = Number(url.substr(url.indexOf("/Book") + 6));
+    var data = { rating, bookId };
 
     $.ajax({
+      url: "/rateBook",
       type: "POST",
-      url: url,
-      data: rating,
-      success: function () {
-        console.log("success");
+      data: data,
+      success: function (newWebRating) {
+        $(".myratings").text(rating);
+        $(".web-ratings").text(newWebRating);
+        console.log("SUCCES");
+      },
+      error: function () {
+        console.log("ERROR");
       },
     });
   });

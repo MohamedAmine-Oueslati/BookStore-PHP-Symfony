@@ -9,14 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-use App\Form\BookType;
 use App\Entity\Books;
-use App\Repository\BooksRepository;
-use App\Form\CommentType;
+use App\Entity\Ratings;
 use App\Entity\Comments;
-use App\Form\SearchType;
 use App\Entity\Search;
-use App\Service\BookListAPI;
+use App\Repository\BooksRepository;
+use App\Repository\RatingsRepository;
+use App\Form\BookType;
+use App\Form\CommentType;
+use App\Form\SearchType;
 
 class BookController extends AbstractController
 {
@@ -64,7 +65,7 @@ class BookController extends AbstractController
     /**
      * @Route("/BookList", name="bookList")
      */
-    public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request, BookListAPI $bookListAPI): Response
+    public function bookList(BooksRepository $repo, PaginatorInterface $paginator, Request $request): Response
     {
 
         $search = new Search();
@@ -114,14 +115,41 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("/rateBook", name="rate_book", methods={"POST"})
+     * @Route("/rateBook", name="rate_book")
      */
-    public function rateBook(request $request): Response
+    public function rateBook(BooksRepository $booksRepo, RatingsRepository $ratingsRepo, request $request): Response
     {
+        $rate = $request->request->get('rating');
+        $bookId = $request->request->get('bookId');
 
-        $data = $request->request->get('data');
-        dd($data);
+        $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->redirectToRoute('bookList');
+        $user = $this->getUser();
+
+        $book = $booksRepo->findOneBy(['id' => $bookId]);
+        $rating = $ratingsRepo->findOneBy(['user' => $user, 'book' => $book]);
+
+        if ($rating) {
+            $rating->setValue($rate);
+        } else {
+            $rating = new Ratings();
+
+            $rating->setBook($book)
+                ->setUser($user)
+                ->setValue($rate);
+
+            $entityManager->persist($rating);
+        }
+        $entityManager->flush();
+
+        $bookRatings = $book->getRatings();
+        $newWebRating = 0;
+        foreach ($bookRatings as $bookRating) {
+            $newWebRating += $bookRating->getValue();
+        }
+        $newWebRating = round($newWebRating / count($bookRatings), 1);
+
+
+        return new Response($newWebRating);
     }
 }

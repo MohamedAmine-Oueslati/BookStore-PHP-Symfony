@@ -66,12 +66,25 @@
                 </ul>
               </div>
               <div class="product-content">
+                {% set rate = 0 %}
+                {% if (book.ratings|length) > 0 %}
+                  {% for rating in book.ratings %}
+                    {% set rate = rate + rating.value %}
+                  {% endfor %}
+                  {% set rate = rate / (book.ratings|length) %}
+                {% endif %}
                 <ul class="rating d-flex justify-content-center align-content-center">
-                  <li class="bi bi-star-fill"></li>
-                  <li class="bi bi-star-fill"></li>
-                  <li class="bi bi-star-fill"></li>
-                  <li class="bi bi-star"></li>
-                  <li class="bi bi-star"></li>
+                  <fieldset class="web-rating">
+                    <input type="radio"
+                      id="star6"
+                      checked /><label for="star6" />
+                  </fieldset>
+                  <h6 class="">
+                    <span class="web-ratings">
+                      {{ rate|round(1, 'common') }}
+                    </span>
+                    /5
+                  </h6>
                 </ul>
                 <h3 class="title">
                   <a href="/Book/{{ book.id }}" class="text-decoration-none">

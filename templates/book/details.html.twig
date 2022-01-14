@@ -34,20 +34,22 @@
                     <div class="h2 fw-bolder d-inline-block">
                       {{ book.title }}
                     </div>
-                    {% if rating > 0 %}
-                      <div class="d-flex justify-content-center align-items-center mt-1"
-                        style="float: right">
-                        <fieldset class="web-rating">
-                          <input type="radio"
-                            id="star5"
-                            checked /><label for="star5" />
-                        </fieldset>
-                        <h6 class="">
-                          <span class="web-ratings">{{ rating }}</span>
-                          /5
-                        </h6>
-                      </div>
-                    {% endif %}
+                    {# {% if rating > 0 %} #}
+                    <div class="d-flex justify-content-center align-items-center mt-1"
+                      style="float: right">
+                      <fieldset class="web-rating">
+                        <input type="radio"
+                          id="star6"
+                          checked /><label for="star6" />
+                      </fieldset>
+                      <h6 class="">
+                        <span class="web-ratings">
+                          {{ rating|round(1, 'common') }}
+                        </span>
+                        /5
+                      </h6>
+                    </div>
+                    {# {% endif %} #}
                   </div>
                   <div class="h6 fw-bolder mb-3">
                     by {{ book.author }}
